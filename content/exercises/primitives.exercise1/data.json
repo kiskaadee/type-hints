@@ -1,0 +1,38 @@
+{
+  "id": "0101",
+  "group": "primitives",
+  "difficulty": "easy",
+  "tags": ["str", "int", "float", "bool", "variable-annotations"],
+  "translations": {
+    "en": {
+      "title": "Basic Type Hints",
+      "hints": {
+        "error_codes": {
+          "PRIMITIVE_STR_001": "employee_name stores text. Look for the Python type used for textual data.",
+          "PRIMITIVE_STR_002": "job_title stores text. Which built-in type represents strings?",
+          "PRIMITIVE_INT_001": "employee_id is a whole number. It is not a decimal value.",
+          "PRIMITIVE_INT_002": "age is represented as a whole number.",
+          "PRIMITIVE_FLOAT_001": "hourly_rate contains decimal values.",
+          "PRIMITIVE_FLOAT_002": "hours_per_week contains decimal values.",
+          "PRIMITIVE_BOOL_001": "is_full_time stores a True/False value.",
+          "PRIMITIVE_BOOL_002": "completed_orientation stores a True/False value."
+        }
+      }
+    },
+    "es": {
+      "title": "Type Hints Básicos",
+      "hints": {
+        "error_codes": {
+          "PRIMITIVE_STR_001": "employee_name almacena texto. Busca el tipo utilizado para cadenas de texto.",
+          "PRIMITIVE_STR_002": "job_title almacena texto. ¿Qué tipo representa cadenas?",
+          "PRIMITIVE_INT_001": "employee_id es un número entero, no decimal.",
+          "PRIMITIVE_INT_002": "age se representa mediante un número entero.",
+          "PRIMITIVE_FLOAT_001": "hourly_rate contiene valores decimales.",
+          "PRIMITIVE_FLOAT_002": "hours_per_week contiene valores decimales.",
+          "PRIMITIVE_BOOL_001": "is_full_time representa un valor verdadero o falso.",
+          "PRIMITIVE_BOOL_002": "completed_orientation representa un valor verdadero o falso."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "content_version": "0.1.0",
+  "exercises": [
+    {
+      "id": "0101",
+      "path": "content/exercises/primitives.basic_type_hints",
+      "group": "primitives",
+      "difficulty": "easy"
+    }
+  ]
+}
