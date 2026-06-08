@@ -8,3 +8,4 @@ env/
 .ruff_cache
 *.sqlite3
 workspace/
+.review
