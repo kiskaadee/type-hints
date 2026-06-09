@@ -12,3 +12,11 @@ Not responsible for:
     - progress persistence
     - synchronization logic
 """
+
+
+def main() -> None:
+    print("Welcome to type-hints!")
+
+
+if __name__ == "__main__":
+    main()

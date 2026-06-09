@@ -13,3 +13,15 @@ Not responsible for:
     - type checking
     - executing tests
 """
+
+import ast
+
+
+def assert_annotation(
+    tree: ast.AST,
+    variable_name: str,
+    expected_type: str,
+    error_code: str,
+) -> None:
+    """Asserts that a variable in the AST has the expected type annotation."""
+    pass
