@@ -1,7 +1,7 @@
 {
   "id": "0101",
   "group": "primitives",
-  "difficulty": "easy",
+  "difficulty": "beginner",
   "tags": ["str", "int", "float", "bool", "variable-annotations"],
   "validation": {
     "annotations": {

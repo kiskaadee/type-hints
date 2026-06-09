@@ -102,6 +102,7 @@ Tasks:
 These are exploratory and not currently planned.
 
 - SQLite progress storage
+- LLM-generated interactive hints (personalized tutoring fallback when validation fails)
 - Plugin system
 - Remote content distribution
 - Community exercise packs
@@ -109,6 +110,7 @@ These are exploratory and not currently planned.
 - Web interface
 - LSP integration
 - Editor extensions
+
 
 ---
 

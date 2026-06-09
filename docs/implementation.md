@@ -154,3 +154,37 @@ def get_glow_install_instructions() -> str:
         "Please install Glow manually from: https://github.com/charmbracelet/glow"
     )
 ```
+
+---
+
+## 3. Planned Feature: LLM-Generated Interactive Hints
+
+To enhance the feedback loop, the CLI can optionally call an LLM (local instance or public API) to generate personalized feedback instead of showing static hints when validation checks fail.
+
+### Control Flow Logic
+
+```mermaid
+flowchart TD
+    CheckFail[Validation Check Fails] --> GetConfig{allow_llm Enabled?}
+    
+    GetConfig -- No --> DisplayStatic[Display static error code hint from data.json]
+    
+    GetConfig -- Yes --> PreparePrompt[Assemble LLM Context]
+    PreparePrompt --> CallLLM[Invoke LLM API]
+    CallLLM --> DisplayLLM[Print personalized tutoring response to console]
+```
+
+### Context Assembly for Prompting
+When invoking the LLM, the CLI should build a detailed context object containing:
+- **Exercise Metadata:** ID, title, learning goals, and tags.
+- **Problem Statement:** The markdown description in the learner's chosen language.
+- **Validation Spec:** The expected annotations/rules from `data.json`.
+- **Learner's Current Solution:** The contents of the modified `<exercise_name>.py` file.
+- **Linter/Static Analysis Diagnostics:** Output from Pyright or AST checks (e.g., which line/annotation failed).
+
+### Prompt Guidelines (System Prompt)
+The system prompt should restrict the LLM behavior to act as an encouraging, Socratic tutor:
+1. Do not output the direct answer or solution code block.
+2. Guide the learner by asking questions or pointing out syntax discrepancies on specific line numbers.
+3. Keep the feedback concise and format output using standard markdown.
+

@@ -4,7 +4,10 @@ version = "0.1.0"
 description = "An interactive CLI for learning Python type hints with automated feedback and progress tracking."
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pydantic>=2.0.0",
+]
+
 
 [project.scripts]
 revex = "revex.main:main"
