@@ -3,6 +3,42 @@
   "group": "primitives",
   "difficulty": "easy",
   "tags": ["str", "int", "float", "bool", "variable-annotations"],
+  "validation": {
+    "annotations": {
+      "employee_name": {
+        "type": "str",
+        "error_code": "PRIMITIVE_STR_001"
+      },
+      "job_title": {
+        "type": "str",
+        "error_code": "PRIMITIVE_STR_002"
+      },
+      "employee_id": {
+        "type": "int",
+        "error_code": "PRIMITIVE_INT_001"
+      },
+      "age": {
+        "type": "int",
+        "error_code": "PRIMITIVE_INT_002"
+      },
+      "hourly_rate": {
+        "type": "float",
+        "error_code": "PRIMITIVE_FLOAT_001"
+      },
+      "hours_per_week": {
+        "type": "float",
+        "error_code": "PRIMITIVE_FLOAT_002"
+      },
+      "is_full_time": {
+        "type": "bool",
+        "error_code": "PRIMITIVE_BOOL_001"
+      },
+      "completed_orientation": {
+        "type": "bool",
+        "error_code": "PRIMITIVE_BOOL_002"
+      }
+    }
+  },
   "translations": {
     "en": {
       "title": "Basic Type Hints",

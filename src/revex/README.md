@@ -46,8 +46,10 @@ After setup:
 type-hints/
 │
 ├── workspace/
-│   ├── variables.assignment/
-│   │   └── exercise.py
+│   ├── primitives/
+│   │   └── 0101-basic_type_hints/
+│   │       ├── basic_type_hints.py
+│   │       └── README.md
 │   └── ...
 │
 ├── .user_data/
@@ -219,7 +221,8 @@ content/
         ├── problem.en.md
         ├── problem.es.md
         ├── exercise.py
-        └── solution.py
+        ├── solution.py
+        └── validate.py   # (Optional) custom validator script (escape hatch)
 ```
 
 ### data.json
