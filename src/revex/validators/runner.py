@@ -14,14 +14,3 @@ Not responsible for:
     - implementing validation rules
     - content loading internals
 """
-# usage: uv run review check <filename.py>
-#
-#   - Infer exercise Id from path
-#   - Runs:
-#       - AST validator
-#       - Pyright validator
-#       - Outputs validation result
-#               - On success: triggers save_progress()
-#               - On failure: suggests hint/explanation
-#
-#

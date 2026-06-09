@@ -16,7 +16,7 @@ Not responsible for:
     - synchronization
 """
 
-# uv run review status:
+# uv run revex status:
 #
 #       Your Progress: 12/30
 #

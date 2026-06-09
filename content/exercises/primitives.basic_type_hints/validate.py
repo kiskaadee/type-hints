@@ -8,7 +8,7 @@ This file is intentionally exercise-specific.
 The generic validation runner loads and executes it.
 """
 
-from review.validators.ast_validator import assert_annotation
+from revex.validators.ast_validator import assert_annotation
 
 
 def validate(tree) -> None:

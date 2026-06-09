@@ -1,4 +1,4 @@
-# review
+# RevEx (revex) CLI
 
 A command-line tool for practicing Python type hints through guided exercises.
 
@@ -26,14 +26,14 @@ uv sync
 Initialize your local workspace:
 
 ```bash
-uv run review setup
+uv run revex setup
 ```
 
 This creates:
 
 ```text
 workspace/
-.review/
+.user_data/
 ```
 
 ---
@@ -50,7 +50,7 @@ type-hints/
 │   │   └── exercise.py
 │   └── ...
 │
-├── .review/
+├── .user_data/
 │   ├── config.toml
 │   ├── progress.json
 │   └── cache/
@@ -67,7 +67,7 @@ Contains learner-facing exercises.
 
 You are expected to modify files inside this directory.
 
-### .review/
+### .user_data/
 
 Contains local application state.
 
@@ -88,7 +88,7 @@ These files are considered read-only.
 Initialize the learner environment.
 
 ```bash
-uv run review setup
+uv run revex setup
 ```
 
 Creates the workspace and application state directories.
@@ -100,7 +100,7 @@ Creates the workspace and application state directories.
 Display current progress.
 
 ```bash
-uv run review status
+uv run revex status
 ```
 
 Example:
@@ -108,7 +108,7 @@ Example:
 ```text
 Your Progress: 12/30
 
-Variables      ✓
+Primitives      ✓
 Collections    ✓
 Functions      ◐
 Union          ✗
@@ -120,15 +120,37 @@ Union          ✗
 
 Validate an exercise.
 
+Usage: 
 ```bash
-uv run review check workspace/variables.assignment/exercise.py
+# check current
+cd workspace/primitives/basic_type_hints
+uv run revex check 
+```
+
+```bash
+# check by group
+cd workspace/primitives/
+uv run revex check 
+```
+
+```bash
+# check by id
+uv run revex check <id> 
+```
+
+```bash
+# check at path
+uv run revex check workspace/primitives/basic_type_hints 
 ```
 
 Validation may include:
 
+**Lazy evaluation**:  if the `workspace's`  is equal to solution.py
+
 * AST-based structural checks
 * Static type analysis
 * Exercise-specific rules
+
 
 Successful validation updates progress automatically.
 
@@ -139,7 +161,7 @@ Successful validation updates progress automatically.
 View or update user preferences.
 
 ```bash
-uv run review set --language en
+uv run revex set --language en
 ```
 
 Supported languages:
@@ -154,7 +176,7 @@ Supported languages:
 Synchronize your workspace with the latest available course content.
 
 ```bash
-uv run review sync
+uv run revex sync
 ```
 
 The sync process:
@@ -178,7 +200,7 @@ git pull
 Then synchronize content:
 
 ```bash
-uv run review sync
+uv run revex sync
 ```
 
 This updates your workspace without losing progress.
@@ -192,7 +214,7 @@ Each exercise is distributed as a self-contained content package:
 ```text
 content/
 └── exercises/
-    └── variables.assignment/
+    └── group.name/
         ├── data.json
         ├── problem.en.md
         ├── problem.es.md

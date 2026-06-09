@@ -1,20 +1,20 @@
 [project]
 name = "type-hints"
 version = "0.1.0"
-description = "Add your description here"
+description = "An interactive CLI for learning Python type hints with automated feedback and progress tracking."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
 
 [project.scripts]
-review = "review.main:main"
+revex = "revex.main:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/review"]
+packages = ["src/revex"]
 
 
 [dependency-groups]

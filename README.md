@@ -43,14 +43,14 @@ uv sync
 Initialize your workspace:
 
 ```bash
-uv run review setup
+uv run revex setup
 ```
 
 This creates:
 
 ```text
 workspace/
-.review/
+.user_data/
 ```
 
 ---
@@ -60,31 +60,31 @@ workspace/
 List available commands:
 
 ```bash
-uv run review
+uv run revex
 ```
 
 Check progress:
 
 ```bash
-uv run review status
+uv run revex status
 ```
 
 Validate an exercise:
 
 ```bash
-uv run review check workspace/variables.assignment/exercise.py
+uv run revex check workspace/variables.assignment/exercise.py
 ```
 
 Synchronize new content:
 
 ```bash
-uv run review sync
+uv run revex sync
 ```
 
 Change language:
 
 ```bash
-uv run review set --language es
+uv run revex set --language es
 ```
 
 ---
@@ -99,11 +99,11 @@ content/
 workspace/
     ...
     
-.review/
+.user_data/
     progress.json
     config.toml
 
-src/review/
+src/revex/
     ...
 ```
 
@@ -117,11 +117,11 @@ Learner-owned files.
 
 This directory is safe to edit.
 
-### .review/
+### .user_data/
 
 Application state.
-
-Stores progress, configuration and cache files.
+Git-ignored. Not affected by `revex sync` or `revex setup` actions.
+Stores user progress, local configuration and cache files.
 
 ---
 
@@ -134,16 +134,43 @@ Content is versioned and distributed with the project.
 Each exercise contains:
 
 ```text
-exercise.py
-solution.py
-problem.en.md
-problem.es.md
-data.json
+topic_name.exercise_name
+    ├── assets/         # resources like like images, pdf documents or other files when needed
+    ├── data.json       # exercise metadata  
+    ├── exercise.py     # A python script with deliberate errors or missing type hints to be solved
+    ├── problem.en.md   # A markdown file expressing the problem description and references.
+    ├── problem.es.md   # A Spanish translation. 
+    ├── solution.py     # The solved python script with proper type annotations
+    └── validate.py     # A python test performing the AST-based validation of the user's solution.
 ```
 
-### Workspace
 
+
+### /workspace
+Git-ignored. Not affected by `revex sync` or `revex setup` actions.
 Exercises are copied into the workspace before being solved.
+
+An exercise-content directory with the aforemention structure 
+should yield a directory with the following elements: 
+
+```text
+group_name
+    └── exercise_name
+        ├── exercise_name.py    # editable copy of the unsolved exercise
+        └── README.md           # copy of the problem.md file, in the language defined by user settings.
+```
+
+While the `/content` directory isn't nested, exercises sharing the same group will be nested inside the same group directory at `/workspace`: 
+
+```text
+topic_name
+    ├── exercise_name_1
+    │   ├── exercise_name_1.py
+    │   └── README.md
+    └── exercise_name_2
+        ├── exercise_name_2.py
+        └── README.md
+```
 
 This ensures updates never overwrite learner code.
 

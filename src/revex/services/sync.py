@@ -18,7 +18,7 @@ Not responsible for:
     - content discovery
 """
 #
-# uv run review sync
+# uv run revex sync
 #   - Syncs workspace with manifest.
 #   - Adds new exercises.
 #   - Never overwrites learner work.

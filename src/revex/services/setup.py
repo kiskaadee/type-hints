@@ -6,7 +6,7 @@ to use the application.
 
 Responsible for:
     - creating workspace/
-    - creating .review/
+    - creating .user_data/
     - generating default config
     - generating initial progress state
 
@@ -16,11 +16,11 @@ Not responsible for:
     - progress reporting
 """
 
-# usage: uv run review setup
+# usage: uv run revex setup
 #   Creates:
 #       workspace/
-#           <populates version-specific exercises>
-#       .review/
+#           <populates exercises>
+#       .user_data/
 #           - config.toml
 #           - progress.json
 #           - cache/
