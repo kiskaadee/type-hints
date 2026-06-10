@@ -7,7 +7,7 @@ and content descriptors.
 
 from pydantic import BaseModel, Field
 
-from .base import ExerciseBase
+from revex.core.models.base import ExerciseBase
 
 
 class AnnotationRule(BaseModel):
