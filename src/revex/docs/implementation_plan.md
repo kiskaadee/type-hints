@@ -13,7 +13,7 @@ revex CLI
   ├── Presentation Layer (src/revex/main.py)
   │     └── Handles arguments, terminal IO, console output, and glow previewing.
   │
-  └── Domain Layer (src/revex/services/ & src/revex/validators/)
+  └── Domain Layer (src/revex/core/services/ & src/revex/core/validators/)
         └── Handles config persistence, syncing files, AST validation, and Pyright checks.
 ```
 
@@ -27,7 +27,7 @@ revex CLI
   - Exits with appropriate system shell codes (`0` on success, `1` on error).
 
 ### Domain Layer (Services & Validators)
-- **Files:** `src/revex/services/` and [src/revex/validators/](../validators/)
+- **Files:** `src/revex/core/services/` and [src/revex/core/validators/](../core/validators/)
 - **Responsibilities:**
   - Standard filesystem operations (creating folders, copying templates).
   - Validation execution (AST checking, launching Pyright subprocesses).
