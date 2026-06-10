@@ -20,8 +20,18 @@ class Settings(BaseModel):
     """User-specific settings configuration."""
 
     language: Literal["en", "es"] = Field(default="en")
-    allow_hints: bool = Field(default=False)
-    allow_llm: bool = Field(default=False)
+    allow_hints: bool = Field(
+        default=False,
+        description="Output static hints when validator finds an error.",
+    )
+    allow_llm: bool = Field(
+        default=False,
+        description="Output LLM-powered personalized hints when validator finds an error",
+    )
+    allow_glow: bool = Field(
+        default=False,
+        description="Terminal outputs decorated with glow (requires glow dependency)",
+    )
 
     # @field_validator("language")
     # @classmethod

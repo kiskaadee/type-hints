@@ -12,4 +12,4 @@ Not responsible for:
     - content discovery
     - exercise validation
 """
-# usage: uv run revex set --language <"es" || "en">
+# usage: uv run revex set --parameter "value"

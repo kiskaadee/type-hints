@@ -56,6 +56,7 @@ erDiagram
         string language
         bool allow_hints
         bool allow_llm
+        bool allow_glow
     }
 ```
 
