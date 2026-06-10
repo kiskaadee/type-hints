@@ -137,7 +137,7 @@ Each exercise contains:
 topic_name.exercise_name
     ├── assets/         # resources like images, pdf documents or other files when needed
     ├── data.json       # exercise metadata and validation rules
-    ├── exercise.py     # python script with deliberate errors or missing type hints to be solved
+    ├── exercise.pytxt  # python template with deliberate errors or missing type hints to be solved
     ├── problem.en.md   # markdown file expressing the problem description and references.
     ├── problem.es.md   # Spanish translation. 
     ├── solution.py     # solved python script with proper type annotations

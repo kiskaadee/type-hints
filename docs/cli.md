@@ -39,10 +39,10 @@ This command keeps the user's workspace aligned with the central content catalog
 flowchart TD
     Start[Load manifest.json] --> Loop[For each exercise in manifest]
     Loop --> Check{Exists in /workspace?}
-    Check -- Yes --> Skip[Skip copying exercise.py - preserve user solution]
+    Check -- Yes --> Skip[Skip copying exercise.pytxt - preserve user solution]
     Check -- No --> Copy[Copy files]
     Copy --> CreateDir[Create workspace/group_name/padded_id-exercise_name/]
-    CreateDir --> CopyCode[Copy content/.../exercise.py as <exercise_name>.py]
+    CreateDir --> CopyCode[Copy content/.../exercise.pytxt as <exercise_name>.py]
     CreateDir --> CopyLang[Copy content/.../problem.lang.md as README.md based on config]
     Skip --> Next[Process next exercise]
     CopyLang --> Next

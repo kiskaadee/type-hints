@@ -220,7 +220,7 @@ content/
         ├── data.json
         ├── problem.en.md
         ├── problem.es.md
-        ├── exercise.py
+        ├── exercise.pytxt
         ├── solution.py
         └── validate.py   # (Optional) custom validator script (escape hatch)
 ```
@@ -238,9 +238,9 @@ Metadata:
 
 Exercise statement and learning material.
 
-### exercise.py
+### exercise.pytxt
 
-Starter code presented to the learner.
+Starter template code.
 
 ### solution.py
 

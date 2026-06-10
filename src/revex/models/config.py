@@ -23,7 +23,6 @@ class Settings(BaseModel):
     allow_hints: bool = Field(default=False)
     allow_llm: bool = Field(default=False)
 
-
     # @field_validator("language")
     # @classmethod
     # def validate_language(cls, value: str) -> str:

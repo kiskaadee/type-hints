@@ -41,7 +41,7 @@ The CLI tool, invoked via `revex`, supports the following user-facing commands:
 * **Usage:** `uv run revex sync`
 * **Behavior:** 
   - Syncs the workspace with `manifest.json`.
-  - Exclusively copies `exercise.py` and the localized problem markdown file (saved as `README.md`) into the workspace directory.
+  - Exclusively copies `exercise.pytxt` and the localized problem markdown file (saved as `README.md`) into the workspace directory.
 
 ### F. Exercise Viewer (`view`)
 * **Usage:** `uv run revex view <id>`
@@ -187,4 +187,3 @@ The system prompt should restrict the LLM behavior to act as an encouraging, Soc
 1. Do not output the direct answer or solution code block.
 2. Guide the learner by asking questions or pointing out syntax discrepancies on specific line numbers.
 3. Keep the feedback concise and format output using standard markdown.
-

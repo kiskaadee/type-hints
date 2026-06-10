@@ -34,7 +34,7 @@ The project should:
 * **Status:** Accepted
 * **Context:** Putting course content directly inside application source files makes content updates difficult to ship without risking breaking application logic, and complicates packaging.
 * **Decision:** 
-  - Strictly isolate application logic inside [src/revex/](file:///home/kiskaadee/Projects/type-hints/src/revex) from exercise content inside [content/](file:///home/kiskaadee/Projects/type-hints/content).
+  - Strictly isolate application logic inside [src/revex/](../src/revex) from exercise content inside [content/](../content).
 * **Consequences:**
   - Content can evolve independently of CLI code.
   - Simplifies distribution and downstream packaging.
@@ -57,7 +57,7 @@ The project should:
 * **Status:** Accepted
 * **Context:** The application needs a robust, fast way to discover exercises, map their IDs to filesystem paths, and know the release version without scanning the entire disk or parsing python modules at start.
 * **Decision:** 
-  - Maintain a centralized [manifest.json](file:///home/kiskaadee/Projects/type-hints/content/manifest.json) in the `content/` folder as the authoritative registry of content.
+  - Maintain a centralized [manifest.json](../content/manifest.json) in the `content/` folder as the authoritative registry of content.
 * **Consequences:**
   - Keeps content discovery separated from content execution/loading.
   - Fast, centralized lookup of exercise attributes (id, group, difficulty, path).
@@ -68,7 +68,7 @@ The project should:
 * **Status:** Accepted
 * **Context:** Copying the entire exercise directory (including `solution.py` and `validate.py`) directly to the learner's workspace would expose answers locally and clutter their view. We also need a structured directory layout in the workspace.
 * **Decision:**
-  - The `revex sync` process only copies `exercise.py` (renamed to `<exercise_name>.py`) and the localized problem markdown file (renamed to `README.md`) to the workspace.
+  - The `revex sync` process only copies `exercise.pytxt` (renamed to `<exercise_name>.py`) and the localized problem markdown file (renamed to `README.md`) to the workspace.
   - Workspace folders are organized as `workspace/<group_name>/<padded_id>-<exercise_name>/`.
   - `solution.py` and `validate.py` are strictly excluded from copying.
 * **Consequences:**
