@@ -1,257 +1,77 @@
-# RevEx (revex) CLI
+# Revex CLI Developer Guide
 
-A command-line tool for practicing Python type hints through guided exercises.
-
-The repository contains the official exercise catalog and validation logic.
-
-Your work, configuration, and progress are stored separately, allowing course content to be updated without overwriting your solutions.
+This directory contains the source code for the **revex** CLI command-line interface. It is structured to maintain a strict separation of concerns between user interaction (presentation) and type-checking logic (domain services).
 
 ---
 
-## Installation
+## 1. CLI Code Directory Layout
 
-Clone the repository:
+The codebase is divided into two primary sub-packages:
 
-```bash
-git clone <repository-url>
-cd type-hints
+```text
+src/revex/
+├── main.py              # Lightweight bootloader/entrypoint
+│
+├── cli/                 # Presentation Layer
+│   ├── __init__.py
+│   ├── parser.py        # Argparse subcommand and options definition
+│   └── commands.py      # Console rendering, stdout/stderr, and flow routing
+│
+├── core/                # Bounded Domain Layer (Unaware of CLI terminal output)
+│   ├── models/          # Pydantic schemas (Config, Progress, ExerciseBase, errors)
+│   ├── services/        # Logic services (Workspace Setup, Sync, Content Loaders)
+│   └── validators/      # Validation Runner, AST checker, and Pyright wrapper
+│
+└── docs/                # System Architecture, CLI Flows, and Developer Roadmaps
 ```
 
-Install dependencies:
+---
 
+## 2. Main Components and Roles
+
+### Presentation Layer (`cli/`)
+- **[main.py](./main.py):** The lightweight main execution script. It initializes [create_parser](./cli/parser.py) to resolve subcommands and redirects execution parameters to commands handlers.
+- **[cli/parser.py](./cli/parser.py):** Implements argument parsing using Python's standard `argparse` library. Defines subcommand structures for `setup`, `status`, `sync`, `check`, `set`, and `view`.
+- **[cli/commands.py](./cli/commands.py):** Handles terminal outputs, printing format blocks, and user feedback decorators (e.g. `glow` subprocesses). Translates data models returned by domain services into user-facing console text.
+
+### Core Bounded Domain Layer (`core/`)
+- **[core/models/](./core/models/):** Defines Pydantic validation models for config TOMLs, progress logs, exercise catalog records, and error diagnostics.
+- **[core/services/](./core/core/services/):** Contains pure, side-effect-isolated Python logic for directory initialization, copying exercise templates, and reading progress records.
+- **[core/validators/](./core/core/validators/):** Coordinates type-hints checking:
+  - `ast_validator.py` checks code structure rules defined in the exercise's `data.json`.
+  - `pyright_validator.py` executes Pyright diagnostics as a background subprocess.
+  - `runner.py` orchestrates execution and updates completion status.
+
+---
+
+## 3. Developer Workflow
+
+### Installation
+To install the package locally in editable mode (so your code changes take effect immediately):
 ```bash
 uv sync
 ```
 
-Initialize your local workspace:
-
+### Type Checking
+Run Pyright type checking across the CLI source codebase:
 ```bash
-uv run revex setup
+uv run pyright
 ```
 
-This creates:
-
-```text
-workspace/
-.user_data/
+### Linting and Formatting
+Check formatting and apply ruff style rule checks:
+```bash
+uv run ruff check src
 ```
 
 ---
 
-## Directory Layout
-
-After setup:
-
-```text
-type-hints/
-│
-├── workspace/
-│   ├── primitives/
-│   │   └── 0101-basic_type_hints/
-│   │       ├── basic_type_hints.py
-│   │       └── README.md
-│   └── ...
-│
-├── .user_data/
-│   ├── config.toml
-│   ├── progress.json
-│   └── cache/
-│
-├── content/
-│   └── ...
-│
-└── src/
-```
-
-### workspace/
-
-Contains learner-facing exercises.
-
-You are expected to modify files inside this directory.
-
-### .user_data/
-
-Contains local application state.
-
-Files in this directory should not be edited manually.
-
-### content/
-
-Contains bundled course content distributed with the application.
-
-These files are considered read-only.
-
----
-
-# Commands
-
-## Setup
-
-Initialize the learner environment.
-
-```bash
-uv run revex setup
-```
-
-Creates the workspace and application state directories.
-
----
-
-## Status
-
-Display current progress.
-
-```bash
-uv run revex status
-```
-
-Example:
-
-```text
-Your Progress: 12/30
-
-Primitives      ✓
-Collections    ✓
-Functions      ◐
-Union          ✗
-```
-
----
-
-## Check
-
-Validate an exercise.
-
-Usage: 
-```bash
-# check current
-cd workspace/primitives/basic_type_hints
-uv run revex check 
-```
-
-```bash
-# check by group
-cd workspace/primitives/
-uv run revex check 
-```
-
-```bash
-# check by id
-uv run revex check <id> 
-```
-
-```bash
-# check at path
-uv run revex check workspace/primitives/basic_type_hints 
-```
-
-Validation may include:
-
-**Lazy evaluation**:  if the `workspace's`  is equal to solution.py
-
-* AST-based structural checks
-* Static type analysis
-* Exercise-specific rules
-
-
-Successful validation updates progress automatically.
-
----
-
-## Settings
-
-View or update user preferences.
-
-```bash
-uv run revex set --language en
-```
-
-Supported languages:
-
-* en
-* es
-
----
-
-## Sync
-
-Synchronize your workspace with the latest available course content.
-
-```bash
-uv run revex sync
-```
-
-The sync process:
-
-* adds newly released exercises
-* updates workspace metadata
-* preserves existing learner solutions
-
-Sync never overwrites files modified by the learner.
-
----
-
-# Updating
-
-Pull the latest repository changes:
-
-```bash
-git pull
-```
-
-Then synchronize content:
-
-```bash
-uv run revex sync
-```
-
-This updates your workspace without losing progress.
-
----
-
-# Exercise Structure
-
-Each exercise is distributed as a self-contained content package:
-
-```text
-content/
-└── exercises/
-    └── group.name/
-        ├── data.json
-        ├── problem.en.md
-        ├── problem.es.md
-        ├── exercise.pytxt
-        ├── solution.py
-        └── validate.py   # (Optional) custom validator script (escape hatch)
-```
-
-### data.json
-
-Metadata:
-
-* identifier
-* difficulty
-* tags
-* localized hints
-
-### problem.<language>.md
-
-Exercise statement and learning material.
-
-### exercise.pytxt
-
-Starter template code.
-
-### solution.py
-
-Reference implementation used internally.
-
----
-
-# Design Goals
-
-* Learner work is never overwritten.
-* Course content can evolve independently of user progress.
-* Exercises are fully versioned.
-* All validation logic remains local and transparent.
-* Content and application logic remain separate.
+## 4. System Specifications & ADRs
+
+For detailed specifications, flowcharts, and architectural decision records, consult the developer docs:
+- **[docs/architecture.md](./docs/architecture.md):** Records the major design decisions (ADRs).
+- **[docs/cli.md](./docs/cli.md):** Visual sequence diagrams and flows for every subcommand lifecycle.
+- **[docs/implementation.md](./docs/implementation.md):** Configuration details, markdown previewer utility scripts, and dependency check guides.
+- **[docs/implementation_plan.md](./docs/implementation_plan.md):** Ordered roadmap milestones and development phases.
+- **[docs/models.md](./docs/models.md):** Entity Relationship Diagrams (ERD) and Classes, Responsibilities, and Collaborators (CRC) indexes.
+- **[docs/roadmap.md](./docs/roadmap.md):** Explorer roadmap and future goals.
