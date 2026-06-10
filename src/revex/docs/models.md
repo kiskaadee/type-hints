@@ -88,6 +88,10 @@ erDiagram
 * **Responsibility:** Represents a structured validation check failure (either AST-based syntax error or Pyright type check diagnostic) returned by the validation runner to guide the learner.
 * **Collaborators:** Validator Runner, CLI
 
+### ConfigError
+* **Responsibility:** Domain exception raised when configuration loading or validation fails.
+* **Collaborators:** Config Service, CLI
+
 
 ---
 

@@ -14,3 +14,9 @@ class ValidationErrorRecord(BaseModel):
     variable_name: str | None = Field(default=None)
     line_number: int | None = Field(default=None)
     message: str | None = Field(default=None)  # The localized hint/explanation
+
+
+class ConfigError(Exception):
+    """Exception raised for configuration syntax or validation errors."""
+
+    pass

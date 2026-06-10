@@ -17,16 +17,10 @@ Not responsible for:
 import tomllib
 from pathlib import Path
 
-from revex.core.models import Config
+from revex.core.models import Config, ConfigError
 from revex.core.services.paths import STATE_DIR
 
 CONFIG_PATH: Path = STATE_DIR / "config.toml"
-
-
-class ConfigError(Exception):
-    """Exception raised for configuration syntax or validation errors."""
-
-    pass
 
 
 def load_config(default: bool = False) -> Config:
