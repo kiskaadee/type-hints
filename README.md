@@ -193,10 +193,11 @@ introduce new exercises.
 
 ## Developer Documentation
 
-- [src/revex/docs/architecture.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/architecture.md)
-- [src/revex/docs/roadmap.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/roadmap.md)
-- [src/revex/docs/cli.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/cli.md)
-- [src/revex/docs/implementation.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation.md)
+- [src/revex/docs/architecture.md](src/revex/docs/architecture.md)
+- [src/revex/docs/roadmap.md](src/revex/docs/roadmap.md)
+- [src/revex/docs/cli.md](src/revex/docs/cli.md)
+- [src/revex/docs/implementation.md](src/revex/docs/implementation.md)
+- [src/revex/docs/implementation_plan.md](src/revex/docs/implementation_plan.md)
 
 ---
 
