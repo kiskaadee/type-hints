@@ -137,3 +137,18 @@ The project should:
 * **Context:** We need to translate Pyright's static analysis output into user-friendly, localized hints.
 * **Decision:** 
   - Postponed to evaluate if declarative AST validation in ADR 10 covers the majority of simple cases, rendering complex Pyright mapping logic unnecessary.
+
+---
+
+## ADR 12: Separation of CLI Presentation from Core Domain Logic
+* **Status:** Accepted
+* **Context:** A flat package layout where business/domain services are mixed with argument parsing and terminal IO print operations leads to a monolithic entry point, circular imports, and complex testing requirements.
+* **Decision:**
+  - Separate the codebase into two distinct layers:
+    1. **Presentation Layer (`revex.cli`):** Handles `argparse` configuration and subcommand routing/console rendering formatting.
+    2. **Domain/Business Logic Layer (`revex.core`):** Contains `models/`, `services/`, and `validators/`. These files must remain strictly unaware of terminal outputs, returning Pydantic models or raising exceptions.
+* **Consequences:**
+  - Prevents console printing logic from cluttering core algorithms.
+  - Allows easy unit testing of core services by mocking function arguments without capturing console standard outputs.
+  - Isolates presentation frameworks (like CLI vs. future web interfaces) from the underlying domain logic.
+
