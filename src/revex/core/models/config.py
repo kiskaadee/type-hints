@@ -7,7 +7,7 @@ data used throughout the application.
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class User(BaseModel):
@@ -21,7 +21,7 @@ class Settings(BaseModel):
 
     language: Literal["en", "es"] = Field(default="en")
     allow_hints: bool = Field(
-        default=False,
+        default=True,
         description="Output static hints when validator finds an error.",
     )
     allow_llm: bool = Field(
@@ -32,6 +32,16 @@ class Settings(BaseModel):
         default=False,
         description="Terminal outputs decorated with glow (requires glow dependency)",
     )
+
+    @field_validator("allow_llm")
+    @classmethod
+    def validate_allow_llm(cls, value: bool) -> bool:
+        """Ensures allow_llm remains False until the feature is implemented."""
+        if value is True:
+            raise ValueError(
+                "LLM-powered interactive hints are not yet supported. Coming soon!"
+            )
+        return value
 
     # @field_validator("language")
     # @classmethod
