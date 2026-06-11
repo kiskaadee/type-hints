@@ -20,3 +20,15 @@ class ConfigError(Exception):
     """Exception raised for configuration syntax or validation errors."""
 
     pass
+
+
+class ManifestError(Exception):
+    """Exception raised for parsing errors found in manifest.json"""
+
+    pass
+
+
+class ExerciseNotFoundError(Exception):
+    """Exception raised when an exercise is not found in the manifest or content directory."""
+
+    pass

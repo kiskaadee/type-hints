@@ -9,6 +9,7 @@ Formats output and handles terminal stdout/stderr logic.
 from revex.core.models import ConfigError
 from revex.core.services.config import load_config, save_config
 from revex.core.services.setup import initialize_environment
+from revex.core.services.sync import sync_workspace
 
 
 def execute_setup() -> None:
@@ -29,6 +30,22 @@ def execute_status() -> None:
 def execute_sync() -> None:
     """Handles 'revex sync' command logic."""
     print("Synchronizing workspace exercises...")
+    try:
+        summary = sync_workspace()
+    except Exception as e:
+        print(f"Error executing workspace synchronization: {e}")
+        return
+
+    for record in summary.records:
+        if record.status == "added":
+            print(f"  [+] Added:   [{record.exercise_id}] {record.exercise_name}")
+        elif record.status == "failed":
+            print(f"  [x] Failed:  [{record.exercise_id}] {record.exercise_name} ({record.reason})")
+
+    print("\nSynchronization complete:")
+    print(f"  Added:   {summary.added_count}")
+    print(f"  Skipped: {summary.skipped_count}")
+    print(f"  Failed:  {summary.failed_count}")
 
 
 def execute_check(target: str | None) -> None:

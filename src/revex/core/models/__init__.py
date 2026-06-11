@@ -1,5 +1,10 @@
 from .config import Config, Settings
-from .errors import ValidationErrorRecord, ConfigError
+from .errors import (
+    ConfigError,
+    ExerciseNotFoundError,
+    ManifestError,
+    ValidationErrorRecord,
+)
 from .manifest import Manifest, ManifestExercise
 from .metadata import (
     AnnotationRule,
@@ -14,6 +19,8 @@ __all__ = [
     "Settings",
     "ValidationErrorRecord",
     "ConfigError",
+    "ManifestError",
+    "ExerciseNotFoundError",
     "ExerciseMetadata",
     "ValidationSpec",
     "AnnotationRule",
