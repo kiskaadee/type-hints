@@ -6,8 +6,14 @@ Formats output and handles terminal stdout/stderr logic.
 """
 
 
-from revex.core.models import ConfigError
+import subprocess
+
+from revex.core.models import ConfigError, ExerciseNotFoundError
 from revex.core.services.config import load_config, save_config
+from revex.core.services.content import load_problem_description
+from revex.core.services.glow_helper import get_glow_install_advice, is_glow_available
+from revex.core.services.manifest import get_manifest_exercise, load_manifest
+from revex.core.services.progress import load_progress
 from revex.core.services.setup import initialize_environment
 from revex.core.services.sync import sync_workspace
 
@@ -82,4 +88,64 @@ def execute_set(language: str | None) -> None:
 
 def execute_view(target: str) -> None:
     """Handles 'revex view' command logic."""
-    print(f"Rendering description for: {target}...")
+    try:
+        config = load_config()
+    except ConfigError as e:
+        print(f"Configuration error: {e}")
+        return
+
+    # 1. Resolve exercise
+    exercise = None
+    if target == "next":
+        try:
+            progress = load_progress()
+            manifest = load_manifest()
+            for ex in manifest.exercises:
+                completed = False
+                if ex.id in progress.completed_exercises:
+                    completed = progress.completed_exercises[ex.id].completed
+                if not completed:
+                    exercise = ex
+                    break
+            if not exercise:
+                print("Congratulations! All exercises are completed!")
+                return
+        except Exception as e:
+            print(f"Error checking progress: {e}")
+            return
+    else:
+        try:
+            exercise = get_manifest_exercise(target)
+        except ExerciseNotFoundError:
+            print(f"Error: Exercise '{target}' not found in the content registry.")
+            return
+        except Exception as e:
+            print(f"Error loading manifest: {e}")
+            return
+
+    # 2. Load problem description
+    try:
+        markdown_content = load_problem_description(exercise, lang=config.settings.language)
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        return
+    except Exception as e:
+        print(f"Error loading problem description: {e}")
+        return
+
+    # 3. Render problem description
+    if config.settings.allow_glow:
+        if is_glow_available():
+            try:
+                subprocess.run(["glow", "-"], input=markdown_content, text=True, check=True)
+                return
+            except Exception as e:
+                print(f"Error rendering with glow: {e}")
+                print("Falling back to raw text output...\n")
+        else:
+            print("Warning: 'allow_glow' is enabled, but the 'glow' binary was not found in your PATH.")
+            print(get_glow_install_advice())
+            print("\nFalling back to raw text output...\n")
+
+    # Fallback raw markdown display
+    print(markdown_content)

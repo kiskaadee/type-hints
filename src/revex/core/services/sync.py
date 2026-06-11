@@ -94,11 +94,11 @@ def sync_workspace() -> SyncSummary:
 
             # Write template file
             template = load_exercise_template(exercise)
-            dest_py_path.write_text(template, encoding="utf-8")
+            _ = dest_py_path.write_text(template, encoding="utf-8")
 
             # Write problem sheet README
             readme = load_problem_description(exercise, lang=lang)
-            dest_readme_path.write_text(readme, encoding="utf-8")
+            _ = dest_readme_path.write_text(readme, encoding="utf-8")
 
             summary.records.append(
                 SyncRecord(

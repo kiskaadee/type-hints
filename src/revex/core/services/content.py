@@ -41,8 +41,9 @@ def load_metadata(exercise: ManifestExercise) -> ExerciseMetadata:
     if not data_path.is_file():
         raise FileNotFoundError(f"Metadata file not found: {data_path}")
     try:
-        data = json.loads(data_path.read_text(encoding="utf-8"))
-        return ExerciseMetadata(**data)
+        return ExerciseMetadata.model_validate(
+            json.loads(data_path.read_text(encoding="utf-8"))
+        )
     except Exception as e:
         raise ValueError(
             f"Error parsing metadata for exercise '{exercise.id}': {e}"

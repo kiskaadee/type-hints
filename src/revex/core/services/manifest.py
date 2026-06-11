@@ -43,8 +43,9 @@ def load_manifest() -> Manifest:
             f"Content catalog not found. Expected manifest at {MANIFEST_PATH}"
         )
     try:
-        data = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-        return Manifest(**data)
+        return Manifest.model_validate(
+            json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+        )
     except json.JSONDecodeError as e:
         raise ManifestError(f"Syntax error in manifest.json: {e}") from e
     except ValidationError as e:
