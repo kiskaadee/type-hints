@@ -16,6 +16,7 @@ Not responsible for:
 
 import tomllib
 from pathlib import Path
+from typing import cast
 
 from revex.core.models import Config, ConfigError
 from revex.core.services.paths import STATE_DIR
@@ -36,8 +37,7 @@ def load_config(default: bool = False) -> Config:
         return Config()
     with open(CONFIG_PATH, "rb") as file:
         try:
-            toml_data = tomllib.load(file)
-            return Config(**toml_data)
+            return Config.model_validate(tomllib.load(file))
         except tomllib.TOMLDecodeError as e:
             raise ConfigError(f"Syntax error in configuration file: {e}") from e
         except Exception as e:
@@ -53,23 +53,28 @@ def save_config(config: Config) -> None:
     CONFIG_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     # Dump the Pydantic model to a standard dictionary
-    config_data = config.model_dump()
-    toml_lines = []
+    config_data = cast(
+        dict[str, dict[str, bool | str | int | float]], config.model_dump()
+    )
+
+    toml_lines: list[str] = []
 
     for section_name, section_values in config_data.items():
-        if isinstance(section_values, dict):
-            toml_lines.append(f"[{section_name}]")
-            for key, value in section_values.items():
-                if isinstance(value, bool):
-                    toml_lines.append(f"{key} = {'true' if value else 'false'}")
-                elif isinstance(value, str):
-                    toml_lines.append(f'{key} = "{value}"')
-                elif isinstance(value, (int, float)):
-                    toml_lines.append(f"{key} = {value}")
-            toml_lines.append("")
+        toml_lines.append(f"[{section_name}]")
+
+        for key, value in section_values.items():
+            if isinstance(value, bool):
+                toml_lines.append(f"{key} = {'true' if value else 'false'}")
+            elif isinstance(value, str):
+                toml_lines.append(f'{key} = "{value}"')
+            else:
+                # Exhaustive type narrowing: Pyright knows this MUST be either int | float
+                toml_lines.append(f"{key} = {value}")
+
+        toml_lines.append("")
 
     # Write out the joined string
-    CONFIG_PATH.write_text("\n".join(toml_lines), encoding="utf-8")
+    _ = CONFIG_PATH.write_text("\n".join(toml_lines), encoding="utf-8")
 
 
 if __name__ == "__main__":

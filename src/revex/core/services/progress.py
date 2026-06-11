@@ -16,16 +16,6 @@ Not responsible for:
     - synchronization
 """
 
-# uv run revex status:
-#
-#       Your Progress: 12/30
-#
-#             Variables     ✓
-#             Collections   ✓
-#             Functions     ✓
-#             Optional      ◐
-#             Union         ✗
-
 import json
 from pathlib import Path
 
@@ -40,14 +30,14 @@ def load_progress() -> Progress:
     if not PROGRESS_PATH.is_file():
         return Progress()
     try:
-        data = json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
-        return Progress(**data)
+        return Progress.model_validate(
+            json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
+        )
     except Exception:
         return Progress()
 
 
 def save_progress(progress: Progress) -> None:
     """Saves the progress model to progress.json."""
-    PROGRESS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    PROGRESS_PATH.write_text(progress.model_dump_json(indent=4), encoding="utf-8")
-
+    _ = PROGRESS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    _ = PROGRESS_PATH.write_text(progress.model_dump_json(indent=4), encoding="utf-8")
