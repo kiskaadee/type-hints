@@ -32,3 +32,4 @@ PROJECT_ROOT = find_project_root()
 WORKSPACE_DIR = PROJECT_ROOT / "workspace"
 STATE_DIR = PROJECT_ROOT / ".user_data"
 CONTENT_DIR = PROJECT_ROOT / "content"
+CACHE_DIR = STATE_DIR / ".revex_cache"

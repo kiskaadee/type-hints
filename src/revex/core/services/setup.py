@@ -17,17 +17,16 @@ Not responsible for:
 """
 
 # usage: uv run revex setup
-#   Creates:
-#       workspace/
-#           <populates exercises> path > exercise.pytxt --> group > path > exercise.py
-#       .user_data/
-#           - config.toml
-#           - progress.json
-#           - cache/
+# -[✓]  creates workspace/
+# -[ ]      Populate Workspace from Manifest: exercise.pytxt exercise.py # to-do
+# -[✓]  creates .user_data/
+# -[✓]      creates config.toml
+# -[✓]      creates progress.json
+# -[✓]  creates revex_cache/
 
 from revex.core.models import Progress
 from revex.core.services.config import load_config, save_config
-from revex.core.services.paths import STATE_DIR, WORKSPACE_DIR
+from revex.core.services.paths import CACHE_DIR, STATE_DIR, WORKSPACE_DIR
 from revex.core.services.progress import PROGRESS_PATH, save_progress
 
 
@@ -39,6 +38,7 @@ def initialize_environment() -> None:
     """
     WORKSPACE_DIR.mkdir(parents=True, exist_ok=True)
     STATE_DIR.mkdir(parents=True, exist_ok=True)
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
     # Initialize config.toml if it does not exist
     config_path = STATE_DIR / "config.toml"
@@ -48,4 +48,3 @@ def initialize_environment() -> None:
     # Initialize progress.json if it does not exist
     if not PROGRESS_PATH.exists():
         save_progress(Progress())
-
