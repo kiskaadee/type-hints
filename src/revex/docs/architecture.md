@@ -152,3 +152,30 @@ The project should:
   - Allows easy unit testing of core services by mocking function arguments without capturing console standard outputs.
   - Isolates presentation frameworks (like CLI vs. future web interfaces) from the underlying domain logic.
 
+---
+
+## ADR 13: Error Recovery for Corrupt Files
+* **Status:** Accepted
+* **Context:** If a configuration file (`config.toml`) or progress tracking file (`progress.json`) exists but contains malformed or corrupted data, we need a standardized recovery flow. Automatically overwriting it risks silent user data loss and masks serialization bugs, while crashing with a raw traceback is poor user experience.
+* **Decision:**
+  - The core domain services will raise a clean domain exception (e.g., `ConfigError` or a standard exception class) when reading malformed/corrupted files.
+  - The CLI presentation layer will catch these exceptions, display a clear user-facing error message identifying the file path, and instruct the user how to fix it or suggest running a clean reset (e.g. `revex setup` or deleting the file).
+* **Consequences:**
+  - Prevents silent loss of user settings and progress.
+  - Preserves traceability of data-corruption bugs.
+  - Keeps the domain layer free of presentation-level assumptions.
+
+---
+
+## ADR 14: Decoupled Synchronization Reporting
+* **Status:** Accepted
+* **Context:** During workspace synchronization (`revex sync`), the system needs to report to the user what exercises were added, skipped, or failed. Printing directly to the console from the domain synchronizer service violates the separation of concerns (ADR 12).
+* **Decision:**
+  - The synchronization service (`sync.py`) will return a structured data model (e.g., `SyncSummary`) containing the lists or counts of exercises added, skipped, or failed.
+  - The CLI commands layer will format and display this summary to the user.
+* **Consequences:**
+  - Ensures full compliance with ADR 12 (Separation of CLI Presentation from Core Domain Logic).
+  - Simplifies unit testing of the synchronization service by letting assertions check the returned object rather than mocking stdout.
+  - Provides flexibility to support quiet flags, JSON formatting, or alternate presentation layers (e.g., a GUI or web frontend).
+
+
