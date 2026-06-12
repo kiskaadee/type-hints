@@ -1,5 +1,6 @@
 from .config import Config, Settings
 from .errors import (
+    ASTValidationError,
     ConfigError,
     ExerciseNotFoundError,
     ManifestError,
@@ -21,6 +22,7 @@ __all__ = [
     "ConfigError",
     "ManifestError",
     "ExerciseNotFoundError",
+    "ASTValidationError",
     "ExerciseMetadata",
     "ValidationSpec",
     "AnnotationRule",

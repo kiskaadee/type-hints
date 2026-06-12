@@ -6,6 +6,7 @@ Formats output and handles terminal stdout/stderr logic.
 """
 
 
+from pathlib import Path
 import subprocess
 
 from revex.core.models import ConfigError, ExerciseNotFoundError
@@ -16,6 +17,7 @@ from revex.core.services.manifest import get_manifest_exercise, load_manifest
 from revex.core.services.progress import load_progress
 from revex.core.services.setup import initialize_environment
 from revex.core.services.sync import sync_workspace
+from revex.core.validators import run_validation
 
 
 def execute_setup() -> None:
@@ -56,7 +58,36 @@ def execute_sync() -> None:
 
 def execute_check(target: str | None) -> None:
     """Handles 'revex check' command logic."""
-    print(f"Validating solution: {target or 'current directory'}...")
+    if target:
+        target_path = Path(target)
+    else:
+        cwd = Path.cwd()
+        py_files = list(cwd.glob("*.py"))
+        filtered_files = [f for f in py_files if not f.name.startswith("__") and f.name != "conftest.py"]
+        if not filtered_files:
+            print("Error: No Python solution file (*.py) found in the current directory.")
+            print("Usage: revex check <file_path>")
+            return
+        target_path = filtered_files[0]
+
+    if not target_path.is_file():
+        print(f"Error: Target path '{target_path}' is not a valid file.")
+        return
+
+    print(f"Validating solution: {target_path.name}...")
+    try:
+        errors = run_validation(target_path)
+    except Exception as e:
+        print(f"Error during validation: {e}")
+        return
+
+    if not errors:
+        print(f"\n✓ {target_path.name}: All checks passed! Lesson completed.")
+    else:
+        print(f"\n✗ {target_path.name}: Validation failed with {len(errors)} error(s):")
+        for err in errors:
+            line_str = f"Line {err.line_number}: " if err.line_number else ""
+            print(f"  - {line_str}{err.message} [{err.error_code}]")
 
 
 def execute_set(language: str | None) -> None:
