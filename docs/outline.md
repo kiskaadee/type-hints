@@ -1,359 +1,172 @@
 # Course Outline
 
-Exercises are designed to challenge the learner to implement type annotations with increasing level of complexity, exercising active research and muscle memory. This isn't focus on teaching any other language features or patterns rather than type annotations in different use cases.
+Exercises are designed to challenge the learner to implement type annotations with increasing levels of complexity, building active research skills, muscle memory, and strict type-safety habits. The focus is strictly on type annotations in different use cases, rather than teaching other language features.
 
 ---
 
-# Planned Learning Path
+## Group 01 — Primitives (`primitives`)
 
-## Module 1 — Primitive Types
+All exercises in this group have the ID `01xx`.
 
-### Exercise 0101
+### Exercise 0101: Basic Variable Annotations
+* **Hartman Taxonomy Level**: Familiarity & Comprehension
+* **Topics**: `str`, `int`, `float`, `bool`
+* **Scenario**: Employee onboarding profile.
+* **Practice**: Filling in `???` blanks with simple primitive type hints.
+  ```python
+  employee_name: str
+  employee_id: int
+  hourly_rate: float
+  is_full_time: bool
+  ```
 
-Basic variable annotations.
-
-Topics:
-
-* `str`
-* `int`
-* `float`
-* `bool`
-
-Example scenario:
-
-Employee onboarding profile.
-
-Students only fill:
-
-```python
-employee_name: ???
-employee_id: ???
-job_title: ???
-hourly_rate: ???
-hours_per_week: ???
-age: ???
-is_full_time: ???
-completed_orientation: ???
-```
-
-No collections yet.
+### Exercise 0102: Optional Values & Type Narrowing
+* **Hartman Taxonomy Level**: Conscious Effort & Conscious Action
+* **Topics**: `str | None`, `Optional[str]`, and type narrowing with `is not None` guards.
+* **Scenario**: Customer support ticket.
+* **Practice**: Declaring nullable fields and using type guards to satisfy strict parameters.
+  ```python
+  assigned_agent: str | None = None
+  
+  # Type guard required under strict check
+  if assigned_agent is not None:
+      process_agent(assigned_agent)
+  ```
 
 ---
 
-## Module 2 — Collection Types
+## Group 02 — Collections (`collections`)
 
-### Exercise 0102
+All exercises in this group have the ID `02xx`.
 
-Introduce:
+### Exercise 0201: Homogeneous Collections
+* **Hartman Taxonomy Level**: Familiarity & Comprehension
+* **Topics**: `list[str]`, `set[str]`, `dict[str, str]`, and `tuple[float, float]`
+* **Scenario**: Team roster and coordinate tracking.
+* **Practice**: Annotating collection types containing single type parameters.
 
-```python
-list[str]
-tuple[float, float]
-set[str]
-dict[str, str]
-```
-
-Use your current employee example.
-
-Topics:
-
-* homogeneous collections
-* key/value structures
-* immutable vs mutable collections
+### Exercise 0202: Complex Nested Collections
+* **Hartman Taxonomy Level**: Conscious Effort & Conscious Action
+* **Topics**: `list[dict[str, str]]`, `dict[str, list[int]]`
+* **Scenario**: Warehouse inventory system.
+* **Practice**: Building complex nested annotations for hierarchical structures.
 
 ---
 
-## Module 3 — Optional Values
+## Group 03 — Functions (`functions`)
 
-### Exercise 0103
+All exercises in this group have the ID `03xx`.
 
-Introduce:
+### Exercise 0301: Function Parameters and Return Types
+* **Hartman Taxonomy Level**: Comprehension
+* **Topics**: Parameter type annotations and function return types (`-> float`, `-> None`).
+* **Scenario**: Price calculator with tax application.
+* **Practice**: Writing basic function signatures.
 
-```python
-str | None
-Optional[str]
-```
-
-Scenario:
-
-Customer support ticket.
-
-Some fields may not exist yet.
-
-```python
-assigned_agent: str | None
-resolution_notes: str | None
-```
-
-Important because FastAPI and Pydantic use this constantly.
+### Exercise 0302: Callable Parameters & Overloads
+* **Hartman Taxonomy Level**: Conscious Action & Proficiency
+* **Topics**: `Callable[[int], str]`, `@overload` decorator.
+* **Scenario**: Event handler registry and polymorphic utility functions.
+* **Practice**: Typing functions that accept other functions, and specifying multiple call signatures.
 
 ---
 
-## Module 4 — Function Annotations
+## Group 04 — Structured Data (`structures`)
 
-### Exercise 0104
+All exercises in this group have the ID `04xx`.
 
-Introduce:
+### Exercise 0401: Type Aliases
+* **Hartman Taxonomy Level**: Comprehension
+* **Topics**: `type UserId = int`, `type Email = str` (using PEP 695 type statement or `TypeAlias` fallback).
+* **Scenario**: User management service.
+* **Practice**: Creating domain-specific type aliases to make code more readable.
 
-```python
-def calculate_total(price: float, tax: float) -> float:
-```
+### Exercise 0402: Enums and Literal Types
+* **Hartman Taxonomy Level**: Conscious Effort
+* **Topics**: `enum.Enum`, `Literal["pending", "shipped"]`
+* **Scenario**: E-commerce order status workflow.
+* **Practice**: Limiting values to exact literal strings or Enum choices.
 
-Topics:
+### Exercise 0403: TypedDict and Dataclasses
+* **Hartman Taxonomy Level**: Conscious Action
+* **Topics**: `typing.TypedDict`, `@dataclass`, handling uninitialized field warnings under strict mode.
+* **Scenario**: Configuring a strict database model representation.
+* **Practice**: Choosing between dict-like structures and dataclasses, resolving class contract initialization errors.
 
-* parameter types
-* return types
-
-This is where type hints become genuinely useful.
-
----
-
-## Module 5 — Complex Collections
-
-### Exercise 0105
-
-Introduce nesting.
-
-```python
-list[dict[str, str]]
-dict[str, list[str]]
-```
-
-Scenario:
-
-Inventory system.
+### Exercise 0404: Casting Parsed JSON-like Objects
+* **Hartman Taxonomy Level**: Conscious Action & Proficiency
+* **Topics**: `json.loads()`, `typing.cast`, `Any` boundary resolution.
+* **Scenario**: Parsing raw JSON API payloads into typed dictionaries.
+* **Practice**: Preventing `Any` propagation by explicitly casting dynamic inputs.
 
 ---
 
-## Module 6 — Type Aliases
+## Group 05 — Interfaces & Protocols (`protocols`)
 
-### Exercise 0106
+All exercises in this group have the ID `05xx`.
 
-Introduce:
+### Exercise 0501: Structural Typing with Protocols
+* **Hartman Taxonomy Level**: Conscious Action & Proficiency
+* **Topics**: `typing.Protocol`, interface segregation.
+* **Scenario**: Mocking external services (e.g. database connections, API clients) for unit tests without inheritance.
+* **Practice**: Writing runtime-free structural contracts to type-check duck-typed components.
 
-```python
-type UserId = int
-
-type Email = str
-```
-
-or
-
-```python
-UserId = int
-```
-
-depending on Python version.
-
-Useful for larger codebases.
+### Exercise 0502: Generics and Type Variables
+* **Hartman Taxonomy Level**: Proficient
+* **Topics**: `Generic[T]`, `TypeVar("T")`
+* **Scenario**: Custom Repository or Cache class.
+* **Practice**: Writing re-usable classes and helper functions that preserve the internal types of their collections.
 
 ---
 
-## Module 7 — TypedDict
+## Group 06 — Data Validation & Pydantic (`pydantic`)
 
-### Exercise 0107
+All exercises in this group have the ID `06xx`.
 
-Introduce:
+### Exercise 0601: Simple Pydantic Models
+* **Hartman Taxonomy Level**: Comprehension
+* **Topics**: `pydantic.BaseModel`, type validation.
+* **Scenario**: User registration payload.
+* **Practice**: Building schema contracts for incoming payloads.
 
-```python
-from typing import TypedDict
-```
+### Exercise 0602: Nested Models & Boundary Validation
+* **Hartman Taxonomy Level**: Conscious Action & Proficiency
+* **Topics**: Nested `BaseModel` attributes, updating models via `.model_copy(update=...)` + `.model_validate()`.
+* **Scenario**: Complex transaction ledger settings update.
+* **Practice**: Modifying Pydantic models in-place while ensuring validation rules are executed.
 
-```python
-class User(TypedDict):
-    name: str
-    age: int
-```
-
-This is often the student's first encounter with structured data typing.
-
----
-
-## Module 8 — Dataclasses
-
-### Exercise 0108
-
-Introduce:
-
-```python
-@dataclass
-class User:
-    ...
-```
-
-Topics:
-
-* modeling data
-* replacing dictionaries
+### Exercise 0603: Generic Pydantic Models
+* **Hartman Taxonomy Level**: Proficient
+* **Topics**: `pydantic.generics.GenericModel` (or Pydantic v2 Generic `BaseModel`).
+* **Scenario**: Standardized envelope response `ApiResponse[T]`.
+* **Practice**: Wrapping data payloads in generic structures.
 
 ---
 
-## Module 9 — Enums
+## Group 07 — Web Framework Integration (`fastapi`)
 
-### Exercise 0109
+All exercises in this group have the ID `07xx`.
 
-Introduce:
+### Exercise 0701: FastAPI Request and Response Typing
+* **Hartman Taxonomy Level**: Conscious Action
+* **Topics**: `response_model`, typing query/path parameters.
+* **Scenario**: Restful API endpoints for resources.
+* **Practice**: Enforcing validation at the HTTP entry and exit points.
 
-```python
-from enum import Enum
-```
-
-```python
-class OrderStatus(Enum):
-    PENDING = "pending"
-    SHIPPED = "shipped"
-```
-
-Very common in APIs.
+### Exercise 0702: Dependency Injection Typing
+* **Hartman Taxonomy Level**: Proficient
+* **Topics**: `typing.Annotated`, `fastapi.Depends`.
+* **Scenario**: Injecting database sessions or authenticated users.
+* **Practice**: Creating modular, type-safe dependency declarations.
 
 ---
 
-## Module 10 — Literal Types
+## Group 08 — Real Project Review (`capstone`)
 
-### Exercise 0110
+All exercises in this group have the ID `08xx`.
 
-Introduce:
-
-```python
-Literal["pending", "approved", "rejected"]
-```
-
-Students start seeing type systems as constraints, not just documentation.
-
----
-
-## Module 11 — Union Types
-
-### Exercise 0111
-
-```python
-str | int
-```
-
-and
-
-```python
-Union[str, int]
-```
-
-Understanding multiple accepted types.
-
----
-
-## Module 12 — Generics
-
-### Exercise 0112
-
-Introduce:
-
-```python
-list[T]
-dict[K, V]
-```
-
-and eventually
-
-```python
-TypeVar
-```
-
----
-
-## Module 13 — Protocols
-
-### Exercise 0113
-
-Introduce structural typing.
-
-```python
-Protocol
-```
-
-This is advanced but extremely valuable.
-
----
-
-## Module 14 — Pydantic Models
-
-### Exercise 0114
-
-First real FastAPI-style model.
-
-```python
-class UserCreate(BaseModel):
-    ...
-```
-
----
-
-## Module 15 — Nested Pydantic Models
-
-### Exercise 0115
-
-```python
-class Address(BaseModel):
-    ...
-
-class User(BaseModel):
-    address: Address
-```
-
----
-
-## Module 16 — FastAPI Request Models
-
-### Exercise 0116
-
-Typing request bodies.
-
-```python
-@app.post("/users")
-```
-
----
-
-## Module 17 — Response Models
-
-### Exercise 0117
-
-```python
-response_model=UserResponse
-```
-
----
-
-## Module 18 — Dependency Injection Typing
-
-### Exercise 0118
-
-Introduce:
-
-```python
-Annotated
-```
-
-```python
-db: Annotated[Session, Depends(get_db)]
-```
-
-Very FastAPI-specific.
-
----
-
-## Module 19 — Generic Pydantic Models
-
-### Exercise 0119
-
-```python
-ApiResponse[T]
-```
-
-Common API pattern.
-
----
-
-## Module 20 — Real Project Review
-
-Students receive a minimal but realistic FastAPI codebase full of missing annotations and must restore them.
-
-This becomes the capstone.
+### Exercise 0801: Capstone Project
+* **Hartman Taxonomy Level**: Unconscious Competence
+* **Topics**: Complex refactoring, full codebase type restoration.
+* **Scenario**: Restoring type hints to a complete, broken, and untyped FastAPI service under strict Pyright configurations.
+* **Practice**: Synthesizing all previous groups (primitives, optionals, protocols, generics, Pydantic, and FastAPI injection) to make the capstone codebase pass checks cleanly.

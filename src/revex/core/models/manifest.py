@@ -19,4 +19,4 @@ class Manifest(BaseModel):
     """Top-level manifest configuration mapping for manifest.json."""
 
     content_version: str
-    exercises: list[ManifestExercise] = Field(default_factory=list)
+    exercises: list[ManifestExercise] = Field(default_factory=list[ManifestExercise])

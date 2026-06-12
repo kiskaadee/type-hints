@@ -9,6 +9,8 @@
     "**/__pycache__",
     ".venv",
     "workspace",
-    ".user_data"
-  ]
+    ".user_data",
+    "tests"
+  ],
+  "typeCheckingMode": "strict"
 }

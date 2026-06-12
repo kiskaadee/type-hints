@@ -38,7 +38,7 @@ class SyncRecord(BaseModel):
 
 
 class SyncSummary(BaseModel):
-    records: list[SyncRecord] = Field(default_factory=list)
+    records: list[SyncRecord] = Field(default_factory=list[SyncRecord])
     added_count: int = 0
     skipped_count: int = 0
     failed_count: int = 0

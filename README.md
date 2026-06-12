@@ -201,6 +201,7 @@ introduce new exercises.
 ## Developer Documentation
 
 - [architecture.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/architecture.md)
+- [authoring_guide.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/authoring_guide.md)
 - [roadmap.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/roadmap.md)
 - [cli.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/cli.md)
 - [implementation.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation.md)
