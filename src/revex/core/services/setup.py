@@ -16,7 +16,7 @@ Not responsible for:
     - progress reporting
 """
 
-# usage: uv run revex setup
+# usage: uv run revex init
 # -[✓]  creates workspace/
 # -[ ]      Populate Workspace from Manifest: exercise.pytxt exercise.py # to-do
 # -[✓]  creates .user_data/

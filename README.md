@@ -43,7 +43,7 @@ uv sync
 Initialize your workspace:
 
 ```bash
-uv run revex setup
+uv run revex init
 ```
 
 This creates:
@@ -81,10 +81,17 @@ Synchronize new content:
 uv run revex sync
 ```
 
-Change language:
+Configure settings:
 
 ```bash
+# Change language preference (en or es)
 uv run revex set --language es
+
+# Toggle static hints on error
+uv run revex set --allow-hints false
+
+# Toggle glow terminal markdown styling
+uv run revex set --allow-glow true
 ```
 
 ---
@@ -120,7 +127,7 @@ This directory is safe to edit.
 ### .user_data/
 
 Application state.
-Git-ignored. Not affected by `revex sync` or `revex setup` actions.
+Git-ignored. Not affected by `revex sync` or `revex init` actions.
 Stores user progress, local configuration and cache files.
 
 ---
@@ -147,7 +154,7 @@ topic_name.exercise_name
 
 
 ### /workspace
-Git-ignored. Not affected by `revex sync` or `revex setup` actions.
+Git-ignored. Not affected by `revex sync` or `revex init` actions.
 Exercises are copied into the workspace before being solved.
 
 An exercise-content directory with the aforemention structure 
@@ -193,16 +200,14 @@ introduce new exercises.
 
 ## Developer Documentation
 
-- [src/revex/docs/architecture.md](src/revex/docs/architecture.md)
-- [src/revex/docs/roadmap.md](src/revex/docs/roadmap.md)
-- [src/revex/docs/cli.md](src/revex/docs/cli.md)
-- [src/revex/docs/implementation.md](src/revex/docs/implementation.md)
-- [src/revex/docs/implementation_plan.md](src/revex/docs/implementation_plan.md)
+- [architecture.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/architecture.md)
+- [roadmap.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/roadmap.md)
+- [cli.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/cli.md)
+- [implementation.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation.md)
+- [implementation_plan.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation_plan.md)
 
 ---
 
 ## Project Status
 
-Early development.
-
-The architecture is being established before implementation begins.
+Core features are fully functional. Milestones 1 through 5 are complete, including workspace initialization (`revex init`), catalog synchronization (`revex sync`), terminal markdown rendering (with optional `glow` support), static AST and Pyright validation (`revex check`), settings management (`revex set`), and progress statistics reporting (`revex status`).

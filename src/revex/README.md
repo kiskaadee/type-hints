@@ -31,7 +31,7 @@ src/revex/
 
 ### Presentation Layer (`cli/`)
 - **[main.py](./main.py):** The lightweight main execution script. It initializes [create_parser](./cli/parser.py) to resolve subcommands and redirects execution parameters to commands handlers.
-- **[cli/parser.py](./cli/parser.py):** Implements argument parsing using Python's standard `argparse` library. Defines subcommand structures for `setup`, `status`, `sync`, `check`, `set`, and `view`.
+- **[cli/parser.py](./cli/parser.py):** Implements argument parsing using Python's standard `argparse` library. Defines subcommand structures for `init`, `status`, `sync`, `check`, `set`, and `view`.
 - **[cli/commands.py](./cli/commands.py):** Handles terminal outputs, printing format blocks, and user feedback decorators (e.g. `glow` subprocesses). Translates data models returned by domain services into user-facing console text.
 
 ### Core Bounded Domain Layer (`core/`)

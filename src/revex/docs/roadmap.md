@@ -12,7 +12,7 @@ Establish the core architecture.
 
 Tasks:
 
-- [x] setup command
+- [x] init command
 - [x] manifest loading
 - [x] content loader
 - [x] progress tracking

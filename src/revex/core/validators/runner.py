@@ -137,6 +137,8 @@ def _resolve_hints(
     """
     try:
         config = load_config()
+        if not config.settings.allow_hints:
+            return
         lang = config.settings.language
     except Exception:
         lang = "en"

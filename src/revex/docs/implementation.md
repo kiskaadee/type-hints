@@ -8,8 +8,8 @@ This document records concrete implementation specifications, CLI command detail
 
 The CLI tool, invoked via `revex`, supports the following user-facing commands:
 
-### A. Workspace Setup (`setup`)
-* **Usage:** `uv run revex setup`
+### A. Workspace Setup (`init`)
+* **Usage:** `uv run revex init`
 * **Behavior:** 
   - Creates the user workspace folder: `/workspace`
   - Creates the user data folder: `/.user_data`
@@ -33,9 +33,17 @@ The CLI tool, invoked via `revex`, supports the following user-facing commands:
   - If validation fails, prints localized hints from `data.json`.
 
 ### D. Settings Management (`set`)
-* **Usage:** `uv run revex set --language <lang>`
+* **Usage:** 
+  - `uv run revex set --language <lang>`
+  - `uv run revex set --allow-hints <true/false>`
+  - `uv run revex set --allow-llm <true/false>`
+  - `uv run revex set --allow-glow <true/false>`
 * **Behavior:** 
-  - Updates the language setting in `/.user_data/config.toml` (e.g., `en` or `es`).
+  - Updates configuration options in `/.user_data/config.toml` using strict schema validation.
+  - `--language` sets the preferred language (`en` or `es`).
+  - `--allow-hints` enables or disables the resolution of localized clues/hints.
+  - `--allow-llm` configures LLM-powered interactive hints (currently blocked as not yet implemented).
+  - `--allow-glow` enables or disables the use of `glow` for terminal markdown formatting.
 
 ### E. Workspace Sync (`sync`)
 * **Usage:** `uv run revex sync`
@@ -49,8 +57,8 @@ The CLI tool, invoked via `revex`, supports the following user-facing commands:
 * **Usage:** `uv run revex view next`
   - Render and display the problem description for the next unsolved exercise in the curriculum.
 * **Behavior:**
-  - Navigates to the corresponding exercise directory in `/workspace/`.
-  - Renders the `README.md` to the console using the system utility `glow`.
+  - Renders the exercise `README.md` content to the console (using `glow` if available and enabled, otherwise raw fallback).
+  - Prints a copy-pasteable navigation tip at the end of the output suggesting the path and `cd` shell command to jump directly to the exercise workspace.
 
 ---
 

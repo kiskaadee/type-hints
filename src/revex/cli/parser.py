@@ -17,8 +17,8 @@ def create_parser() -> argparse.ArgumentParser:
         dest="command", required=True, help="Available subcommands"
     )
 
-    # setup subcommand
-    subparsers.add_parser("setup", help="Initialize the local learner workspace.")
+    # init subcommand
+    subparsers.add_parser("init", help="Initialize the local learner workspace.")
 
     # status subcommand
     subparsers.add_parser(
@@ -40,6 +40,21 @@ def create_parser() -> argparse.ArgumentParser:
     set_parser = subparsers.add_parser("set", help="View or update preferences.")
     set_parser.add_argument(
         "--language", choices=["en", "es"], help="Set preferred language (en/es)."
+    )
+    set_parser.add_argument(
+        "--allow-hints",
+        choices=["true", "false"],
+        help="Output static hints on errors (true/false).",
+    )
+    set_parser.add_argument(
+        "--allow-llm",
+        choices=["true", "false"],
+        help="Output LLM-powered interactive hints (true/false).",
+    )
+    set_parser.add_argument(
+        "--allow-glow",
+        choices=["true", "false"],
+        help="Use glow to render markdown (true/false).",
     )
 
     # view subcommand

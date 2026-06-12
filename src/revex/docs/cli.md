@@ -4,7 +4,7 @@ This document details the command execution flows, terminal rendering behaviors,
 
 ---
 
-## 1. Setup Flow (`revex setup`)
+## 1. Setup Flow (`revex init`)
 
 This command initializes a learner's environment. It is idempotent; if run multiple times, it will only create files/folders if they do not exist.
 
@@ -15,7 +15,7 @@ sequenceDiagram
     participant CLI as revex CLI
     participant FS as Filesystem
     
-    Learner->>CLI: run "revex setup"
+    Learner->>CLI: run "revex init"
     CLI->>FS: Check for /workspace and /.user_data
     alt Folders do not exist
         CLI->>FS: Create /workspace directory
@@ -107,4 +107,5 @@ sequenceDiagram
         CLI->>CLI: Call get_glow_install_instructions()
         CLI->>Learner: Output install command suggestions and fallback text
     end
+    CLI->>Learner: Print navigation tip (workspace path and cd command)
 ```

@@ -63,9 +63,9 @@ Establish the workspace and settings configuration pipeline.
   - **Config Service (`services/config.py`):** Functions to load, validate, and save `/.user_data/config.toml` using `Config` and `Settings` Pydantic models.
   - **Setup Service (`services/setup.py`):** Creates directories and initializes default files.
 * **CLI Integration:**
-  - Implement `revex setup` command.
+  - Implement `revex init` command.
 * **Verification Criteria:**
-  - Running `revex setup` creates `/workspace/` and `/.user_data/`, writing default configs.
+  - Running `revex init` creates `/workspace/` and `/.user_data/`, writing default configs.
 
 ---
 

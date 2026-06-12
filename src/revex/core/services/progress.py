@@ -62,3 +62,47 @@ def record_attempt(exercise_id: str, completed: bool) -> None:
         ex_progress.completed_at = datetime.now(timezone.utc)
 
     save_progress(progress)
+
+
+def get_progress_statistics() -> dict[str, dict[str, int]]:
+    """
+    Calculates module-by-module (group) completion statistics and overall totals.
+
+    Returns:
+        A dictionary mapping group names (plus a special 'overall' key) to a dict containing:
+        - 'completed': number of completed exercises
+        - 'total': total number of exercises in the group
+        - 'attempts': total attempts within the group
+    """
+    from revex.core.services.manifest import list_manifest_exercises
+
+    progress = load_progress()
+    exercises = list_manifest_exercises()
+
+    stats: dict[str, dict[str, int]] = {}
+    overall = {"completed": 0, "total": 0, "attempts": 0}
+
+    for ex in exercises:
+        group = ex.group
+        if group not in stats:
+            stats[group] = {"completed": 0, "total": 0, "attempts": 0}
+
+        ex_progress = progress.completed_exercises.get(ex.id)
+        is_completed = False
+        attempts = 0
+        if ex_progress:
+            is_completed = ex_progress.completed
+            attempts = ex_progress.attempts
+
+        stats[group]["total"] += 1
+        overall["total"] += 1
+
+        stats[group]["attempts"] += attempts
+        overall["attempts"] += attempts
+
+        if is_completed:
+            stats[group]["completed"] += 1
+            overall["completed"] += 1
+
+    stats["overall"] = overall
+    return stats

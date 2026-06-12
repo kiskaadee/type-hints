@@ -159,7 +159,7 @@ The project should:
 * **Context:** If a configuration file (`config.toml`) or progress tracking file (`progress.json`) exists but contains malformed or corrupted data, we need a standardized recovery flow. Automatically overwriting it risks silent user data loss and masks serialization bugs, while crashing with a raw traceback is poor user experience.
 * **Decision:**
   - The core domain services will raise a clean domain exception (e.g., `ConfigError` or a standard exception class) when reading malformed/corrupted files.
-  - The CLI presentation layer will catch these exceptions, display a clear user-facing error message identifying the file path, and instruct the user how to fix it or suggest running a clean reset (e.g. `revex setup` or deleting the file).
+  - The CLI presentation layer will catch these exceptions, display a clear user-facing error message identifying the file path, and instruct the user how to fix it or suggest running a clean reset (e.g. `revex init` or deleting the file).
 * **Consequences:**
   - Prevents silent loss of user settings and progress.
   - Preserves traceability of data-corruption bugs.
@@ -177,5 +177,3 @@ The project should:
   - Ensures full compliance with ADR 12 (Separation of CLI Presentation from Core Domain Logic).
   - Simplifies unit testing of the synchronization service by letting assertions check the returned object rather than mocking stdout.
   - Provides flexibility to support quiet flags, JSON formatting, or alternate presentation layers (e.g., a GUI or web frontend).
-
-
