@@ -4,6 +4,7 @@ from .errors import (
     ConfigError,
     ExerciseNotFoundError,
     ManifestError,
+    ProgressError,
     ValidationErrorRecord,
 )
 from .manifest import Manifest, ManifestExercise
@@ -21,6 +22,7 @@ __all__ = [
     "ValidationErrorRecord",
     "ConfigError",
     "ManifestError",
+    "ProgressError",
     "ExerciseNotFoundError",
     "ASTValidationError",
     "ExerciseMetadata",

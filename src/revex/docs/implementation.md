@@ -195,3 +195,66 @@ The system prompt should restrict the LLM behavior to act as an encouraging, Soc
 1. Do not output the direct answer or solution code block.
 2. Guide the learner by asking questions or pointing out syntax discrepancies on specific line numbers.
 3. Keep the feedback concise and format output using standard markdown.
+
+---
+
+## 4. Testing Guidelines
+
+To ensure the reliability of the **revex** CLI, developers should verify functionality using both automated and manual testing methodologies.
+
+### A. Automated Testing
+Automated unit and integration tests are located in the `tests/` directory.
+
+* **Run Command:**
+  ```bash
+  uv run pytest
+  ```
+* **Design & Isolation:**
+  The test suite uses a pytest fixture in `tests/conftest.py` that mocks filesystem paths (`STATE_DIR`, `WORKSPACE_DIR`, `CACHE_DIR`) to a temporary isolated path (`tmp_path`). This guarantees that:
+  - Running tests does not alter the developer's local active workspace or configuration.
+  - Tests start with a clean slate each run.
+
+### B. Manual Verification Workflow
+Because automated tests run in a highly isolated temporary environment, they may not catch configuration conflicts present in the real project directory structure (for example, the root level `pyrightconfig.json` containing exclude rules). Therefore, manual end-to-end testing should always be performed before shipping releases.
+
+#### E2E Verification Steps:
+1. **Reset state:**
+   Delete local user data and workspace directories if they exist in your project root to start fresh:
+   ```bash
+   rm -rf .user_data workspace
+   ```
+2. **Initialize Workspace:**
+   ```bash
+   uv run revex init
+   ```
+   *Verify:* The `.user_data/` and `workspace/` directories are successfully created, and default config files are generated.
+3. **Synchronize Content:**
+   ```bash
+   uv run revex sync
+   ```
+   *Verify:* Exercise files are copied into the workspace (e.g. `workspace/primitives/0101-basic_type_hints/`).
+4. **View Problems:**
+   Check the exercise description:
+   ```bash
+   uv run revex view 0101
+   uv run revex view next
+   ```
+   *Verify:* The CLI displays the markdown file correctly (using `glow` if available, falling back to raw stdout text if not).
+5. **Check Unsolved State:**
+   ```bash
+   uv run revex check workspace/primitives/0101-basic_type_hints/basic_type_hints.py
+   ```
+   *Verify:* The validator halts on syntax or annotation errors and prints localized hints.
+6. **Check Solved State:**
+   Copy the reference solution from `content/exercises/primitives.basic_type_hints/solution.py` to the workspace file and run the check again.
+   *Verify:* The validation passes cleanly.
+7. **Check Progress Status:**
+   ```bash
+   uv run revex status
+   ```
+   *Verify:* The completion rate is reported as `100%` and attempts are correctly tracked.
+8. **Verify Settings Mutation:**
+   ```bash
+   uv run revex set --language es
+   ```
+   *Verify:* Settings file is updated and future error outputs or problem viewings are localized.

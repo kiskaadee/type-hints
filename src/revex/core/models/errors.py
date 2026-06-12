@@ -63,3 +63,10 @@ class ExerciseNotFoundError(Exception):
     """Exception raised when an exercise is not found in the manifest or content directory."""
 
     pass
+
+
+class ProgressError(Exception):
+    """Exception raised for progress data syntax or validation errors."""
+
+    pass
+

@@ -20,7 +20,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from revex.core.models import ExerciseProgress, Progress
+from revex.core.models import ExerciseProgress, Progress, ProgressError
 from revex.core.services.paths import STATE_DIR
 
 PROGRESS_PATH: Path = STATE_DIR / "progress.json"
@@ -34,8 +34,10 @@ def load_progress() -> Progress:
         return Progress.model_validate(
             json.loads(PROGRESS_PATH.read_text(encoding="utf-8"))
         )
-    except Exception:
-        return Progress()
+    except json.JSONDecodeError as e:
+        raise ProgressError(f"Syntax error in progress file: {e}") from e
+    except Exception as e:
+        raise ProgressError(f"Invalid progress data: {e}") from e
 
 
 def save_progress(progress: Progress) -> None:

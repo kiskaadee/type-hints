@@ -63,9 +63,20 @@ def validate_pyright(file_path: Path) -> list[ValidationErrorRecord]:
     errors: list[ValidationErrorRecord] = []
 
     try:
-        # Run pyright with json output
+        from revex.core.services.paths import CACHE_DIR, PROJECT_ROOT
+        config_path = CACHE_DIR / "pyrightconfig.json"
+        
+        # Dynamically generate configuration to avoid workspace exclusions
+        config_data = {
+            "venvPath": str(PROJECT_ROOT),
+            "venv": ".venv",
+            "typeCheckingMode": "strict"
+        }
+        config_path.write_text(json.dumps(config_data, indent=2), encoding="utf-8")
+
+        # Run pyright with json output and config path
         result = subprocess.run(
-            ["pyright", "--outputjson", str(file_path)],
+            ["pyright", "-p", str(config_path), "--outputjson", str(file_path)],
             capture_output=True,
             text=True,
         )
