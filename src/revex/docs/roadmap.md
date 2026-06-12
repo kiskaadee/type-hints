@@ -12,13 +12,13 @@ Establish the core architecture.
 
 Tasks:
 
-- [ ] bootstrap command
-- [ ] manifest loading
-- [ ] content loader
-- [ ] progress tracking
-- [ ] configuration management
-- [ ] synchronization logic
-- [ ] validator runner
+- [x] setup command
+- [x] manifest loading
+- [x] content loader
+- [x] progress tracking
+- [x] configuration management
+- [x] synchronization logic
+- [x] validator runner
 
 ---
 
@@ -30,11 +30,11 @@ Complete the learner workflow.
 
 Tasks:
 
-- [ ] exercise discovery
-- [ ] validation execution
-- [ ] progress persistence
-- [ ] status reporting
-- [ ] exercise completion tracking
+- [x] exercise discovery
+- [x] validation execution
+- [x] progress persistence
+- [ ] status reporting (Milestone 5)
+- [x] exercise completion tracking
 
 ---
 

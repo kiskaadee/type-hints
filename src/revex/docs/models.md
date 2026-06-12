@@ -92,6 +92,18 @@ erDiagram
 * **Responsibility:** Domain exception raised when configuration loading or validation fails.
 * **Collaborators:** Config Service, CLI
 
+### ManifestError
+* **Responsibility:** Domain exception raised for syntax or loading issues in the catalog manifest.json.
+* **Collaborators:** Manifest Service, CLI
+
+### ExerciseNotFoundError
+* **Responsibility:** Domain exception raised when a requested exercise identifier is missing from the catalog registry.
+* **Collaborators:** Manifest Service, Content Service, CLI
+
+### ASTValidationError
+* **Responsibility:** Internal control-flow exception raised during syntax tree traversal when variable annotation constraints are violated.
+* **Collaborators:** AST Validator, Validator Runner
+
 
 ---
 
