@@ -63,6 +63,16 @@ def main() -> None:
         )
     elif args.command == "view" and args.target is not None:
         execute_view(args.target)
+    elif args.command == "help":
+        subparser_choices = {}
+        for action in parser._actions:
+            if isinstance(action, argparse._SubParsersAction):
+                subparser_choices = action.choices
+                break
+        if args.target and args.target in subparser_choices:
+            subparser_choices[args.target].print_help()
+        else:
+            parser.print_help()
     else:
         parser.print_help()
         sys.exit(1)

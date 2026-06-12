@@ -17,12 +17,12 @@ A company is onboarding a new employee.
 Several variables already contain valid values, but their type
 annotations have been removed.
 
-Replace every `???` with the correct type annotation.
+Replace every `"???"` with the correct type annotation.
 
 Example:
 
 ```python
-employee_name: ??? = "Alex Rivera"
+employee_name: "???" = "Alex Rivera"
 ```
 
 should become:

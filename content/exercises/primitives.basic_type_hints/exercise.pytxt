@@ -11,23 +11,23 @@ Instructions:
 
 # Employee information
 
-employee_name: ??? = "Alex Rivera"
-employee_id: ??? = 49201
-job_title: ??? = "Data Analyst"
+employee_name: "???" = "Alex Rivera"
+employee_id: "???" = 49201
+job_title: "???" = "Data Analyst"
 
 # Compensation
 
-hourly_rate: ??? = 35.50
-hours_per_week: ??? = 37.5
+hourly_rate: "???" = 35.50
+hours_per_week: "???" = 37.5
 
 # Personal information
 
-age: ??? = 28
+age: "???" = 28
 
 # Employment status
 
-is_full_time: ??? = True
-completed_orientation: ??? = False
+is_full_time: "???" = True
+completed_orientation: "???" = False
 
 
 if __name__ == "__main__":

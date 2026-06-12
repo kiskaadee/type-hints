@@ -108,6 +108,23 @@ def execute_check(target: str | None) -> None:
     """Handles 'revex check' command logic."""
     if target:
         target_path = Path(target)
+        if not target_path.is_file():
+            # Check if target is a 4-digit exercise ID
+            if len(target) == 4 and target.isdigit():
+                try:
+                    from revex.core.services.paths import WORKSPACE_DIR
+                    exercise = get_manifest_exercise(target)
+                    exercise_name = get_exercise_name(exercise)
+                    resolved_path = (
+                        WORKSPACE_DIR
+                        / exercise.group
+                        / f"{exercise.id}-{exercise_name}"
+                        / f"{exercise_name}.py"
+                    )
+                    if resolved_path.is_file():
+                        target_path = resolved_path
+                except Exception:
+                    pass
     else:
         cwd = Path.cwd()
         py_files = list(cwd.glob("*.py"))
@@ -120,12 +137,20 @@ def execute_check(target: str | None) -> None:
             print(
                 "Error: No Python solution file (*.py) found in the current directory."
             )
-            print("Usage: revex check <file_path>")
+            print("Usage: revex check <file_path_or_id>")
             return
         target_path = filtered_files[0]
 
     if not target_path.is_file():
-        print(f"Error: Target path '{target_path}' is not a valid file.")
+        if target and len(target) == 4 and target.isdigit():
+            print(
+                f"Error: Solution file for exercise ID '{target}' not found in workspace."
+            )
+            print(
+                "Please make sure the workspace is initialized and synchronized using 'revex sync'."
+            )
+        else:
+            print(f"Error: Target path '{target_path}' is not a valid file.")
         return
 
     print(f"Validating solution: {target_path.name}...")

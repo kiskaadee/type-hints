@@ -17,12 +17,12 @@ Una empresa está registrando la información de un nuevo empleado.
 Las variables ya contienen valores válidos, pero sus anotaciones de
 tipo fueron eliminadas.
 
-Reemplaza cada `???` por la anotación correcta.
+Reemplaza cada `"???"` por la anotación correcta.
 
 Ejemplo:
 
 ```python
-employee_name: ??? = "Alex Rivera"
+employee_name: "???" = "Alex Rivera"
 ```
 
 debe convertirse en:

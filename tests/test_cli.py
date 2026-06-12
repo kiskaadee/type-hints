@@ -10,6 +10,20 @@ def run_cli_main(args: list[str]) -> None:
             if e.code != 0:
                 raise RuntimeError(f"CLI exited with non-zero code: {e.code}")
 
+def test_empty_command_shows_help(capsys):
+    import pytest
+    with patch("sys.argv", ["revex"]):
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        assert exc_info.value.code == 1
+    captured = capsys.readouterr()
+    assert "usage: " in captured.out or "usage: " in captured.err
+
+def test_help_command(capsys):
+    run_cli_main(["help", "check"])
+    captured = capsys.readouterr()
+    assert "usage: revex check" in captured.out
+
 def test_init_command(capsys):
     run_cli_main(["init"])
     captured = capsys.readouterr()
@@ -69,8 +83,13 @@ def test_check_and_status_flow(capsys):
     from revex.core.services.paths import WORKSPACE_DIR, PROJECT_ROOT
     exercise_file = WORKSPACE_DIR / "primitives/0101-basic_type_hints/basic_type_hints.py"
     
-    # Ensure checking fails initially due to syntax error in template
+    # Ensure checking fails initially in template
     run_cli_main(["check", str(exercise_file)])
+    captured = capsys.readouterr()
+    assert "Validation failed" in captured.out
+
+    # Ensure we can check using the exercise ID directly
+    run_cli_main(["check", "0101"])
     captured = capsys.readouterr()
     assert "Validation failed" in captured.out
     
