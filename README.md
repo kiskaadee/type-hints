@@ -27,6 +27,16 @@ canonical exercise sources.
 
 ## Installation
 
+### Prerequisites
+
+For the best learning experience, we recommend having the following tools installed:
+
+- **[uv](https://github.com/astral-sh/uv)** — A fast Python package installer and resolver.
+- **[glow](https://github.com/charmbracelet/glow)** — A terminal markdown reader for beautiful exercise descriptions.
+- **[direnv](https://direnv.net/)** (recommended) — To automatically load the Python virtual environment upon entering the project directory.
+
+### Setup
+
 Clone the repository:
 
 ```bash
