@@ -1,0 +1,38 @@
+{
+  "id": "0102",
+  "group": "primitives",
+  "difficulty": "beginner",
+  "tags": ["optional", "type-guards", "union-types"],
+  "validation": {
+    "annotations": {
+      "assigned_agent": {
+        "type": "str | None",
+        "error_code": "OPTIONAL_AGENT_001"
+      },
+      "resolution_notes": {
+        "type": "str | None",
+        "error_code": "OPTIONAL_NOTES_001"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Optional Values & Type Guards",
+      "hints": {
+        "error_codes": {
+          "OPTIONAL_AGENT_001": "assigned_agent can be a string or None. Try using union syntax (str | None).",
+          "OPTIONAL_NOTES_001": "resolution_notes can be a string or None. Try using union syntax (str | None)."
+        }
+      }
+    },
+    "es": {
+      "title": "Valores Opcionales y Guardas de Tipo",
+      "hints": {
+        "error_codes": {
+          "OPTIONAL_AGENT_001": "assigned_agent puede ser una cadena o None. Intente usar la sintaxis de unión (str | None).",
+          "OPTIONAL_NOTES_001": "resolution_notes puede ser una cadena o None. Intente usar la sintaxis de unión (str | None)."
+        }
+      }
+    }
+  }
+}

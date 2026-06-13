@@ -6,6 +6,12 @@
       "path": "content/exercises/primitives.basic_type_hints",
       "group": "primitives",
       "difficulty": "beginner"
+    },
+    {
+      "id": "0102",
+      "path": "content/exercises/primitives.optional_values",
+      "group": "primitives",
+      "difficulty": "beginner"
     }
   ]
 }
