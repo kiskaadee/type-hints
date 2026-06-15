@@ -1,0 +1,12 @@
+# E-commerce Inventory Catalog
+# TODO: Annotate the inventory mapping catalogs (dictionary of prices, dictionary of stocks).
+item_prices = {"apple": 1.25, "banana": 0.75}
+item_stock = {"apple": 50, "banana": 120}
+
+# Calculate total value of the inventory
+total_value = 0.0
+for fruit, price in item_prices.items():
+    stock = item_stock.get(fruit, 0)
+    total_value += price * stock
+
+print(f"Total inventory worth: {total_value:.2f}")

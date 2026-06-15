@@ -1,0 +1,35 @@
+{
+  "id": "0205",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "hr",
+    "nested-collections"
+  ],
+  "validation": {
+    "annotations": {
+      "department_roster": {
+        "type": "dict[str, list[dict[str, str]]]",
+        "error_code": "COLL_ROSTER_DEPT"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Department Employee Roster",
+      "hints": {
+        "error_codes": {
+          "COLL_ROSTER_DEPT": "department_roster must map strings to lists of string-to-string dictionaries: 'dict[str, list[dict[str, str]]]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Roster de Empleados por Departamento",
+      "hints": {
+        "error_codes": {
+          "COLL_ROSTER_DEPT": "department_roster debe asociar cadenas con listas de diccionarios de cadena a cadena: 'dict[str, list[dict[str, str]]]'."
+        }
+      }
+    }
+  }
+}

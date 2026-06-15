@@ -1,0 +1,41 @@
+{
+  "id": "0202",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "ecommerce",
+    "collections"
+  ],
+  "validation": {
+    "annotations": {
+      "item_prices": {
+        "type": "dict[str, float]",
+        "error_code": "COLL_CATALOG_PRICES"
+      },
+      "item_stock": {
+        "type": "dict[str, int]",
+        "error_code": "COLL_CATALOG_STOCK"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Inventory Catalog",
+      "hints": {
+        "error_codes": {
+          "COLL_CATALOG_PRICES": "item_prices must be a dictionary mapping strings to floats: 'dict[str, float]'.",
+          "COLL_CATALOG_STOCK": "item_stock must be a dictionary mapping strings to integers: 'dict[str, int]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Catálogo de Inventario",
+      "hints": {
+        "error_codes": {
+          "COLL_CATALOG_PRICES": "item_prices debe ser un diccionario que asocie cadenas con decimales: 'dict[str, float]'.",
+          "COLL_CATALOG_STOCK": "item_stock debe ser un diccionario que asocie cadenas con enteros: 'dict[str, int]'."
+        }
+      }
+    }
+  }
+}

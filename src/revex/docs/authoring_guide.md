@@ -158,3 +158,32 @@ Once all files are written, follow this manual testing flow to verify the exerci
    uv run revex check workspace/primitives/0102-variable_reassignment/variable_reassignment.py
    ```
    Confirm that the validator passes cleanly with a success message!
+
+---
+
+## 4. Best Practices & Pedagogical Rules
+
+When authoring new exercises, you must adhere to the following rules to maintain consistent quality and learning efficacy:
+
+### A. The "Pyright Detective" Philosophy
+* **Groups 01–02**: Use simple "fill-in-the-blank" annotations or minor code repairs to build muscle memory for syntax.
+* **Groups 03–10**: Transition to debugging style. The code must be runnable and syntactically valid but raise strict `pyright` errors. The learner's task is to fix the type checking failures *without* changing the core runtime execution behavior of the code.
+
+### B. No Concept Leakage (Strict Isolation)
+* Exercises must **never** require or expose concepts that belong to later groups.
+* E.g., do not use `Union` or `isinstance` type guards in Groups 01–02.
+* E.g., do not use custom `Protocol` interfaces in Groups 01–06.
+* Keep the code logic simple and focused purely on the concept of the current group.
+
+### C. Repetition & Redundancy
+* To build active retention, include multiple exercises targeting the same underlying concept (e.g., handling nullable parameters) but applied to different domains (e.g., database configs, gaming physics, API payload defaults).
+
+### D. Validation Design (AST vs. Pyright)
+* **Tier 1 (Groups 01–02)**: Use `data.json`'s `validation.annotations` to enforce exact expected types. This ensures beginners use correct primitives or collection formats rather than typing everything as `Any` to cheat the type checker.
+* **Tier 2 (Groups 03–10)**: Omit `validation.annotations` (keep it as an empty dictionary `{}`). Let the exercise validation rely entirely on the Pyright type-checker execution. The success condition is that Pyright reports zero diagnostics.
+
+### E. Full Bilingual Localization
+* Every exercise must support Spanish and English.
+* Provide `problem.en.md` and `problem.es.md` descriptions.
+* Provide translations for all error codes in `data.json`'s `translations.en` and `translations.es`.
+

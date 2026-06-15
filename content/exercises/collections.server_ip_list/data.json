@@ -1,0 +1,41 @@
+{
+  "id": "0201",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "sysadmin",
+    "collections"
+  ],
+  "validation": {
+    "annotations": {
+      "active_ips": {
+        "type": "list[str]",
+        "error_code": "COLL_FIREWALL_ACT"
+      },
+      "blocked_ips": {
+        "type": "set[str]",
+        "error_code": "COLL_FIREWALL_BLK"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Network Firewall Logs",
+      "hints": {
+        "error_codes": {
+          "COLL_FIREWALL_ACT": "active_ips must be typed as a list of strings: 'list[str]'.",
+          "COLL_FIREWALL_BLK": "blocked_ips must be typed as a set of strings: 'set[str]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Registros de Cortafuegos de Red",
+      "hints": {
+        "error_codes": {
+          "COLL_FIREWALL_ACT": "active_ips debe ser de tipo lista de cadenas: 'list[str]'.",
+          "COLL_FIREWALL_BLK": "blocked_ips debe ser de tipo conjunto de cadenas: 'set[str]'."
+        }
+      }
+    }
+  }
+}

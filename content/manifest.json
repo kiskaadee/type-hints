@@ -12,6 +12,66 @@
       "path": "content/exercises/primitives.optional_values",
       "group": "primitives",
       "difficulty": "beginner"
+    },
+    {
+      "id": "0103",
+      "path": "content/exercises/primitives.compound_interest",
+      "group": "primitives",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0104",
+      "path": "content/exercises/primitives.request_metadata",
+      "group": "primitives",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0105",
+      "path": "content/exercises/primitives.distance_calculator",
+      "group": "primitives",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0106",
+      "path": "content/exercises/primitives.server_port_config",
+      "group": "primitives",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0201",
+      "path": "content/exercises/collections.server_ip_list",
+      "group": "collections",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0202",
+      "path": "content/exercises/collections.product_catalog",
+      "group": "collections",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0203",
+      "path": "content/exercises/collections.telemetry_coordinates",
+      "group": "collections",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0204",
+      "path": "content/exercises/collections.user_activity_log",
+      "group": "collections",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0205",
+      "path": "content/exercises/collections.department_roster",
+      "group": "collections",
+      "difficulty": "beginner"
+    },
+    {
+      "id": "0206",
+      "path": "content/exercises/collections.board_game_matrix",
+      "group": "collections",
+      "difficulty": "beginner"
     }
   ]
 }

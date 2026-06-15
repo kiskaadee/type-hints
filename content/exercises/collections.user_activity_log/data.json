@@ -1,0 +1,41 @@
+{
+  "id": "0204",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "analytics",
+    "nested-collections"
+  ],
+  "validation": {
+    "annotations": {
+      "user_sessions": {
+        "type": "dict[str, list[str]]",
+        "error_code": "COLL_NEST_SESS"
+      },
+      "session_durations": {
+        "type": "list[dict[str, int]]",
+        "error_code": "COLL_NEST_DUR"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "User Session Analytics",
+      "hints": {
+        "error_codes": {
+          "COLL_NEST_SESS": "user_sessions must map strings to lists of strings: 'dict[str, list[str]]'.",
+          "COLL_NEST_DUR": "session_durations must be a list of string-to-integer dicts: 'list[dict[str, int]]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Analíticas de Sesiones de Usuario",
+      "hints": {
+        "error_codes": {
+          "COLL_NEST_SESS": "user_sessions debe asociar cadenas con listas de cadenas: 'dict[str, list[str]]'.",
+          "COLL_NEST_DUR": "session_durations debe ser una lista de diccionarios de cadena a entero: 'list[dict[str, int]]'."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "0203",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "gis",
+    "collections"
+  ],
+  "validation": {
+    "annotations": {
+      "current_position": {
+        "type": "tuple[float, float]",
+        "error_code": "COLL_GPS_CURR"
+      },
+      "waypoint_coordinates": {
+        "type": "list[tuple[float, float]]",
+        "error_code": "COLL_GPS_PATH"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "GPS Coordinate Tracker",
+      "hints": {
+        "error_codes": {
+          "COLL_GPS_CURR": "current_position must be a tuple of two floats: 'tuple[float, float]'.",
+          "COLL_GPS_PATH": "waypoint_coordinates must be a list of float-tuples: 'list[tuple[float, float]]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Seguimiento de Coordenadas GPS",
+      "hints": {
+        "error_codes": {
+          "COLL_GPS_CURR": "current_position debe ser una tupla de dos floats: 'tuple[float, float]'.",
+          "COLL_GPS_PATH": "waypoint_coordinates debe ser una lista de tuplas de floats: 'list[tuple[float, float]]'."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "0103",
+  "group": "primitives",
+  "difficulty": "beginner",
+  "tags": [
+    "finance",
+    "primitives"
+  ],
+  "validation": {
+    "annotations": {
+      "principal": {
+        "type": "float",
+        "error_code": "PRIM_INTEREST_PRIN"
+      },
+      "rate": {
+        "type": "float",
+        "error_code": "PRIM_INTEREST_RATE"
+      },
+      "years": {
+        "type": "int",
+        "error_code": "PRIM_INTEREST_YEAR"
+      },
+      "is_compound": {
+        "type": "bool",
+        "error_code": "PRIM_INTEREST_COMP"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Compound Interest Calculator",
+      "hints": {
+        "error_codes": {
+          "PRIM_INTEREST_PRIN": "principal must be typed as float.",
+          "PRIM_INTEREST_RATE": "rate must be typed as float.",
+          "PRIM_INTEREST_YEAR": "years must be typed as int.",
+          "PRIM_INTEREST_COMP": "is_compound must be typed as bool."
+        }
+      }
+    },
+    "es": {
+      "title": "Calculadora de Interés Compuesto",
+      "hints": {
+        "error_codes": {
+          "PRIM_INTEREST_PRIN": "principal debe ser de tipo float.",
+          "PRIM_INTEREST_RATE": "rate debe ser de tipo float.",
+          "PRIM_INTEREST_YEAR": "years debe ser de tipo int.",
+          "PRIM_INTEREST_COMP": "is_compound debe ser de tipo bool."
+        }
+      }
+    }
+  }
+}

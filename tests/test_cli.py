@@ -37,7 +37,7 @@ def test_sync_command(capsys):
     run_cli_main(["sync"])
     captured = capsys.readouterr()
     assert "Synchronizing workspace exercises..." in captured.out
-    assert "Added:   1" in captured.out
+    assert "Added:   12" in captured.out
 
 def test_set_command(capsys):
     run_cli_main(["init"])
@@ -107,4 +107,4 @@ def test_check_and_status_flow(capsys):
     captured = capsys.readouterr()
     assert "Revex Progress Status" in captured.out
     assert "primitives" in captured.out
-    assert "1/1 (100.0%)" in captured.out
+    assert "1/6 (16.7%)" in captured.out

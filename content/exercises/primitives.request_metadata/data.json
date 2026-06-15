@@ -1,0 +1,47 @@
+{
+  "id": "0104",
+  "group": "primitives",
+  "difficulty": "beginner",
+  "tags": [
+    "networking",
+    "optionals"
+  ],
+  "validation": {
+    "annotations": {
+      "user_agent": {
+        "type": "str | None",
+        "error_code": "PRIM_REQ_UA"
+      },
+      "auth_token": {
+        "type": "str | None",
+        "error_code": "PRIM_REQ_AUTH"
+      },
+      "content_length": {
+        "type": "int | None",
+        "error_code": "PRIM_REQ_LEN"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "HTTP Request Metadata",
+      "hints": {
+        "error_codes": {
+          "PRIM_REQ_UA": "user_agent should accept a string or None. Use 'str | None'.",
+          "PRIM_REQ_AUTH": "auth_token should accept a string or None. Use 'str | None'.",
+          "PRIM_REQ_LEN": "content_length should accept an int or None. Use 'int | None'."
+        }
+      }
+    },
+    "es": {
+      "title": "Metadatos de Solicitudes HTTP",
+      "hints": {
+        "error_codes": {
+          "PRIM_REQ_UA": "user_agent debe aceptar una cadena o None. Use 'str | None'.",
+          "PRIM_REQ_AUTH": "auth_token debe aceptar una cadena o None. Use 'str | None'.",
+          "PRIM_REQ_LEN": "content_length debe aceptar un int o None. Use 'int | None'."
+        }
+      }
+    }
+  }
+}

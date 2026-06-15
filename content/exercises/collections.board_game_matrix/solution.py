@@ -1,0 +1,15 @@
+# Game Engine Board State & Player History
+# TODO: Annotate board_game_matrix and player_scores.
+board_game_matrix: list[list[str]] = [
+    ["X", "O", " "],
+    [" ", "X", "O"],
+    ["O", " ", "X"]
+]
+player_scores: dict[str, list[int]] = {
+    "Player 1": [10, 15, 20],
+    "Player 2": [5, 22, 18]
+}
+
+# Verify board center cell
+center_cell = board_game_matrix[1][1]
+print(f"Center board token is: '{center_cell}'")

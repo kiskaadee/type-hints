@@ -1,0 +1,53 @@
+{
+  "id": "0106",
+  "group": "primitives",
+  "difficulty": "beginner",
+  "tags": [
+    "devops",
+    "optionals"
+  ],
+  "validation": {
+    "annotations": {
+      "port": {
+        "type": "int",
+        "error_code": "PRIM_CONF_PORT"
+      },
+      "host": {
+        "type": "str",
+        "error_code": "PRIM_CONF_HOST"
+      },
+      "ssl_cert": {
+        "type": "str | None",
+        "error_code": "PRIM_CONF_SSL"
+      },
+      "debug_mode": {
+        "type": "bool",
+        "error_code": "PRIM_CONF_DEBUG"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Server Port Configuration",
+      "hints": {
+        "error_codes": {
+          "PRIM_CONF_PORT": "port must be typed as int.",
+          "PRIM_CONF_HOST": "host must be typed as str.",
+          "PRIM_CONF_SSL": "ssl_cert must be typed as 'str | None'.",
+          "PRIM_CONF_DEBUG": "debug_mode must be typed as bool."
+        }
+      }
+    },
+    "es": {
+      "title": "Configuración de Puerto de Servidor",
+      "hints": {
+        "error_codes": {
+          "PRIM_CONF_PORT": "port debe ser de tipo int.",
+          "PRIM_CONF_HOST": "host debe ser de tipo str.",
+          "PRIM_CONF_SSL": "ssl_cert debe ser de tipo 'str | None'.",
+          "PRIM_CONF_DEBUG": "debug_mode debe ser de tipo bool."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "0206",
+  "group": "collections",
+  "difficulty": "beginner",
+  "tags": [
+    "gaming",
+    "nested-collections"
+  ],
+  "validation": {
+    "annotations": {
+      "board_game_matrix": {
+        "type": "list[list[str]]",
+        "error_code": "COLL_MATRIX_BOARD"
+      },
+      "player_scores": {
+        "type": "dict[str, list[int]]",
+        "error_code": "COLL_MATRIX_SCORES"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Tic-Tac-Toe Board State",
+      "hints": {
+        "error_codes": {
+          "COLL_MATRIX_BOARD": "board_game_matrix must be a list of lists of strings: 'list[list[str]]'.",
+          "COLL_MATRIX_SCORES": "player_scores must map strings to lists of integers: 'dict[str, list[int]]'."
+        }
+      }
+    },
+    "es": {
+      "title": "Estado del Tablero de Tres en Raya",
+      "hints": {
+        "error_codes": {
+          "COLL_MATRIX_BOARD": "board_game_matrix debe ser una lista de listas de cadenas: 'list[list[str]]'.",
+          "COLL_MATRIX_SCORES": "player_scores debe asociar cadenas con listas de enteros: 'dict[str, list[int]]'."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "id": "0105",
+  "group": "primitives",
+  "difficulty": "beginner",
+  "tags": [
+    "gaming",
+    "optionals"
+  ],
+  "validation": {
+    "annotations": {
+      "delta_x": {
+        "type": "float",
+        "error_code": "PRIM_DIST_DX"
+      },
+      "delta_y": {
+        "type": "float",
+        "error_code": "PRIM_DIST_DY"
+      },
+      "spawn_delay": {
+        "type": "float | None",
+        "error_code": "PRIM_DIST_DELAY"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "2D Spawn Telemetry",
+      "hints": {
+        "error_codes": {
+          "PRIM_DIST_DX": "delta_x must be typed as float.",
+          "PRIM_DIST_DY": "delta_y must be typed as float.",
+          "PRIM_DIST_DELAY": "spawn_delay should accept a float or None. Use 'float | None'."
+        }
+      }
+    },
+    "es": {
+      "title": "Telemetría de Spawn 2D",
+      "hints": {
+        "error_codes": {
+          "PRIM_DIST_DX": "delta_x debe ser de tipo float.",
+          "PRIM_DIST_DY": "delta_y debe ser de tipo float.",
+          "PRIM_DIST_DELAY": "spawn_delay debe aceptar un float o None. Use 'float | None'."
+        }
+      }
+    }
+  }
+}
