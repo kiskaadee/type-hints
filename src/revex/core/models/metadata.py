@@ -17,10 +17,19 @@ class AnnotationRule(BaseModel):
     error_code: str
 
 
+class FunctionRule(BaseModel):
+    """AST validation rule for verifying a function signature contract."""
+
+    params: dict[str, str] = Field(default_factory=dict)
+    returns: str | None = None
+    error_code: str
+
+
 class ValidationSpec(BaseModel):
     """Declarative validation specifications for an exercise."""
 
     annotations: dict[str, AnnotationRule] = Field(default_factory=dict)
+    functions: dict[str, FunctionRule] = Field(default_factory=dict)
 
 
 class ExerciseTranslation(BaseModel):

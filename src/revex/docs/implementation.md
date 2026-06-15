@@ -46,10 +46,13 @@ The CLI tool, invoked via `revex`, supports the following user-facing commands:
   - `--allow-glow` enables or disables the use of `glow` for terminal markdown formatting.
 
 ### E. Workspace Sync (`sync`)
-* **Usage:** `uv run revex sync`
+* **Usage:** 
+  - `uv run revex sync`
+  - `uv run revex sync --restore <id>`
 * **Behavior:** 
   - Syncs the workspace with `manifest.json`.
   - Exclusively copies `exercise.pytxt` and the localized problem markdown file (saved as `README.md`) into the workspace directory.
+  - If `--restore <id>` is provided, it forces the restoration of the specified exercise, overwriting any user modifications to its workspace file and description sheet with the clean original template.
 
 ### F. Exercise Viewer (`view`)
 * **Usage:** `uv run revex view <id>`

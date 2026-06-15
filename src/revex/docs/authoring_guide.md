@@ -83,8 +83,12 @@ Create `data.json` inside your exercise folder. This file configures the static 
 
 #### How validation rules match:
 * Under `validation.annotations`, each key represents the name of a variable that must be annotated.
-* `type` defines the exact text of the expected type hint (e.g., `"int"`, `"list[str]"`).
-* `error_code` is a unique diagnostic code. This code maps directly to the localized messages in `translations.<lang>.hints.error_codes`.
+  * `type` defines the exact text of the expected type hint (e.g., `"int"`, `"list[str]"`).
+  * `error_code` is a unique diagnostic code. This code maps directly to the localized messages in `translations.<lang>.hints.error_codes`.
+* Under `validation.functions`, each key represents the name of a helper function whose signature must be locked down (to prevent learners from modifying function signatures to bypass caller-side validation constraints):
+  * `params` is a dictionary mapping parameter names to their expected type annotations (e.g., `{"agent": "str"}`).
+  * `returns` specifies the expected return type annotation (e.g., `"None"`).
+  * `error_code` is the diagnostic code to raise if the signature, parameter naming, parameter type, or return type is altered.
 
 ---
 

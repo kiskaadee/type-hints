@@ -108,3 +108,79 @@ def test_check_and_status_flow(capsys):
     assert "Revex Progress Status" in captured.out
     assert "primitives" in captured.out
     assert "1/6 (16.7%)" in captured.out
+
+
+def test_function_signature_validator():
+    import tempfile
+    from pathlib import Path
+    from revex.core.models.metadata import ValidationSpec, FunctionRule
+    from revex.core.validators.ast_validator import validate_ast
+    
+    spec = ValidationSpec(
+        functions={
+            "close_ticket": FunctionRule(
+                params={"agent": "str"},
+                returns="None",
+                error_code="TEST_ERR_SIG"
+            )
+        }
+    )
+    
+    with tempfile.NamedTemporaryFile(suffix=".py", mode="w", delete=False) as tmp:
+        tmp_path = Path(tmp.name)
+        try:
+            # 1. Invalid signature (missing return annotation)
+            tmp_path.write_text("def close_ticket(agent: str):\n    pass\n", encoding="utf-8")
+            errors = validate_ast(tmp_path, spec)
+            assert len(errors) == 1
+            assert errors[0].error_code == "TEST_ERR_SIG"
+            assert "missing a return type annotation" in errors[0].message
+            
+            # 2. Invalid signature (mismatched parameter annotation)
+            tmp_path.write_text("def close_ticket(agent: str | None) -> None:\n    pass\n", encoding="utf-8")
+            errors = validate_ast(tmp_path, spec)
+            assert len(errors) == 1
+            assert "Expected parameter 'agent'" in errors[0].message
+            
+            # 3. Invalid signature (missing parameter)
+            tmp_path.write_text("def close_ticket() -> None:\n    pass\n", encoding="utf-8")
+            errors = validate_ast(tmp_path, spec)
+            assert len(errors) == 1
+            assert "missing the expected parameter" in errors[0].message
+
+            # 4. Valid signature
+            tmp_path.write_text("def close_ticket(agent: str) -> None:\n    pass\n", encoding="utf-8")
+            errors = validate_ast(tmp_path, spec)
+            assert len(errors) == 0
+        finally:
+            tmp_path.unlink()
+
+
+def test_sync_restore_command(capsys):
+    run_cli_main(["init"])
+    run_cli_main(["sync"])
+    capsys.readouterr()
+
+    from revex.core.services.paths import WORKSPACE_DIR, PROJECT_ROOT
+    exercise_file = WORKSPACE_DIR / "primitives/0101-basic_type_hints/basic_type_hints.py"
+
+    # Write a modification
+    original_content = exercise_file.read_text(encoding="utf-8")
+    exercise_file.write_text("MODIFIED_BY_USER", encoding="utf-8")
+
+    # Run restore sync
+    run_cli_main(["sync", "--restore", "0101"])
+    captured = capsys.readouterr()
+    assert "Restoring exercise workspace [0101]..." in captured.out
+    assert "Restored: 1" in captured.out
+    
+    # Check that it's back to original template
+    restored_content = exercise_file.read_text(encoding="utf-8")
+    assert restored_content != "MODIFIED_BY_USER"
+    assert "Exercise 0101" in restored_content
+
+    # Run restore with invalid ID
+    run_cli_main(["sync", "--restore", "9999"])
+    captured = capsys.readouterr()
+    assert "Error executing workspace synchronization:" in captured.out
+    assert "not found in the content registry" in captured.out

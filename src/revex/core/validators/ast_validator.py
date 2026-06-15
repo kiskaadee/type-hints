@@ -86,6 +86,93 @@ def assert_annotation(
         )
 
 
+def assert_function_signature(
+    tree: ast.AST,
+    func_name: str,
+    expected_params: dict[str, str],
+    expected_returns: str | None,
+    error_code: str,
+) -> None:
+    """
+    Check an AST for a function signature and parameter type annotations.
+
+    Args:
+        tree: The parsed Python Abstract Syntax Tree to inspect.
+        func_name: The name of the function to verify.
+        expected_params: A dictionary mapping parameter names to expected type strings.
+        expected_returns: The expected return type annotation as a string (or None if unchecked).
+        error_code: The domain-specific error code to raise on failure.
+
+    Raises:
+        ASTValidationError: If the function is missing, lacks parameters, has mismatched annotations,
+            or has an incorrect return type annotation.
+    """
+    func_nodes: list[ast.FunctionDef] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef) and node.name == func_name:
+            func_nodes.append(node)
+
+    if not func_nodes:
+        raise ASTValidationError(
+            error_code=error_code,
+            variable_name=func_name,
+            line_number=None,
+            message=f"Function '{func_name}' is missing or not defined.",
+        )
+
+    node = func_nodes[0]
+
+    # 1. Verify return annotation
+    if expected_returns is not None:
+        if node.returns is None:
+            raise ASTValidationError(
+                error_code=error_code,
+                variable_name=func_name,
+                line_number=node.lineno,
+                message=f"Function '{func_name}' is missing a return type annotation.",
+            )
+        actual_returns = ast.unparse(node.returns).strip()
+        if actual_returns != expected_returns.strip():
+            raise ASTValidationError(
+                error_code=error_code,
+                variable_name=func_name,
+                line_number=node.lineno,
+                message=f"Expected function '{func_name}' to return '{expected_returns}' but found '{actual_returns}'.",
+            )
+
+    # 2. Verify all expected parameters exist
+    actual_param_names = {arg.arg for arg in node.args.args}
+    for expected_name in expected_params:
+        if expected_name not in actual_param_names:
+            raise ASTValidationError(
+                error_code=error_code,
+                variable_name=f"{func_name}.{expected_name}",
+                line_number=node.lineno,
+                message=f"Function '{func_name}' is missing the expected parameter '{expected_name}'.",
+            )
+
+    # 3. Verify parameter annotations
+    for arg in node.args.args:
+        arg_name = arg.arg
+        if arg_name in expected_params:
+            expected_type = expected_params[arg_name]
+            if arg.annotation is None:
+                raise ASTValidationError(
+                    error_code=error_code,
+                    variable_name=f"{func_name}.{arg_name}",
+                    line_number=arg.lineno,
+                    message=f"Parameter '{arg_name}' of function '{func_name}' is missing a type annotation.",
+                )
+            actual_type = ast.unparse(arg.annotation).strip()
+            if actual_type != expected_type.strip():
+                raise ASTValidationError(
+                    error_code=error_code,
+                    variable_name=f"{func_name}.{arg_name}",
+                    line_number=arg.lineno,
+                    message=f"Expected parameter '{arg_name}' of function '{func_name}' to have type hint '{expected_type}' but found '{actual_type}'.",
+                )
+
+
 def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorRecord]:
     """
     Parse a source file and execute structural validation rules.
@@ -96,7 +183,7 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
 
     Args:
         file_path: The filesystem path to the student's source code.
-        spec: The rulebook containing the expected variables and their types.
+        spec: The rulebook containing the expected variables/functions and their types.
 
     Returns:
         A list of ValidationErrorRecord objects detailing any failures.
@@ -134,9 +221,24 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
         )
         return errors
 
+    # Check variable annotations
     for variable_name, rule in spec.annotations.items():
         try:
             assert_annotation(tree, variable_name, rule.type, rule.error_code)
+        except ASTValidationError as e:
+            errors.append(
+                ValidationErrorRecord(
+                    error_code=e.error_code,
+                    variable_name=e.variable_name,
+                    line_number=e.line_number,
+                    message=str(e),
+                )
+            )
+
+    # Check function signatures
+    for func_name, rule in spec.functions.items():
+        try:
+            assert_function_signature(tree, func_name, rule.params, rule.returns, rule.error_code)
         except ASTValidationError as e:
             errors.append(
                 ValidationErrorRecord(

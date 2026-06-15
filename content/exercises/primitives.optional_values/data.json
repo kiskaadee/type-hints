@@ -13,6 +13,15 @@
         "type": "str | None",
         "error_code": "OPTIONAL_NOTES_001"
       }
+    },
+    "functions": {
+      "close_ticket": {
+        "params": {
+          "agent": "str"
+        },
+        "returns": "None",
+        "error_code": "OPTIONAL_CLOSE_TICKET_SIG"
+      }
     }
   },
   "translations": {
@@ -21,7 +30,8 @@
       "hints": {
         "error_codes": {
           "OPTIONAL_AGENT_001": "assigned_agent can be a string or None. Try using union syntax (str | None).",
-          "OPTIONAL_NOTES_001": "resolution_notes can be a string or None. Try using union syntax (str | None)."
+          "OPTIONAL_NOTES_001": "resolution_notes can be a string or None. Try using union syntax (str | None).",
+          "OPTIONAL_CLOSE_TICKET_SIG": "The signature of 'close_ticket' must not be changed. It must accept 'agent: str' and return 'None'."
         }
       }
     },
@@ -30,7 +40,8 @@
       "hints": {
         "error_codes": {
           "OPTIONAL_AGENT_001": "assigned_agent puede ser una cadena o None. Intente usar la sintaxis de unión (str | None).",
-          "OPTIONAL_NOTES_001": "resolution_notes puede ser una cadena o None. Intente usar la sintaxis de unión (str | None)."
+          "OPTIONAL_NOTES_001": "resolution_notes puede ser una cadena o None. Intente usar la sintaxis de unión (str | None).",
+          "OPTIONAL_CLOSE_TICKET_SIG": "La firma de 'close_ticket' no debe ser modificada. Debe aceptar 'agent: str' y devolver 'None'."
         }
       }
     }

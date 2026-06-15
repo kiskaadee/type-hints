@@ -42,16 +42,18 @@ class SyncSummary(BaseModel):
     added_count: int = 0
     skipped_count: int = 0
     failed_count: int = 0
+    restored_count: int = 0
 
 
-def sync_workspace() -> SyncSummary:
+def sync_workspace(restore_id: str | None = None) -> SyncSummary:
     """
     Synchronizes learner workspace with the latest course content.
     1. Loads manifest.
     2. Loads active config (for language settings).
     3. For each exercise:
        - Determines destination path: workspace/<group>/<padded_id>-<exercise_name>/
-       - Checks if <exercise_name>.py already exists (if so, skips to protect learner work).
+       - If restore_id is specified, overwrites the target exercise files even if they exist.
+       - Otherwise, checks if <exercise_name>.py already exists (if so, skips to protect learner work).
        - Copies exercise.pytxt to <exercise_name>.py
        - Copies problem.<lang>.md to README.md
     4. Compiles and returns SyncSummary.
@@ -70,13 +72,21 @@ def sync_workspace() -> SyncSummary:
         # If the manifest itself fails to load, we raise it
         raise e
 
+    # If restoring, filter to the specific exercise and verify it exists
+    if restore_id is not None:
+        matched = [ex for ex in exercises if ex.id == restore_id]
+        if not matched:
+            raise ValueError(f"Exercise ID '{restore_id}' not found in the content registry.")
+        exercises = matched
+
     for exercise in exercises:
         exercise_name = get_exercise_name(exercise)
         dest_dir = WORKSPACE_DIR / exercise.group / f"{exercise.id}-{exercise_name}"
         dest_py_path = dest_dir / f"{exercise_name}.py"
         dest_readme_path = dest_dir / "README.md"
 
-        if dest_py_path.exists():
+        # Skip checking for existing file if we are restoring
+        if restore_id is None and dest_py_path.exists():
             summary.records.append(
                 SyncRecord(
                     exercise_id=exercise.id,
@@ -100,14 +110,18 @@ def sync_workspace() -> SyncSummary:
             readme = load_problem_description(exercise, lang=lang)
             _ = dest_readme_path.write_text(readme, encoding="utf-8")
 
+            status = "restored" if restore_id is not None else "added"
             summary.records.append(
                 SyncRecord(
                     exercise_id=exercise.id,
                     exercise_name=exercise_name,
-                    status="added",
+                    status=status,
                 )
             )
-            summary.added_count += 1
+            if status == "restored":
+                summary.restored_count += 1
+            else:
+                summary.added_count += 1
         except Exception as e:
             summary.records.append(
                 SyncRecord(

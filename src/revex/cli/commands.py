@@ -81,26 +81,35 @@ def execute_status() -> None:
     print(f"  Total Attempts:  {total_attempts}")
 
 
-def execute_sync() -> None:
+def execute_sync(restore_id: str | None = None) -> None:
     """Handles 'revex sync' command logic."""
-    print("Synchronizing workspace exercises...")
+    if restore_id is not None:
+        print(f"Restoring exercise workspace [{restore_id}]...")
+    else:
+        print("Synchronizing workspace exercises...")
+        
     try:
-        summary = sync_workspace()
+        summary = sync_workspace(restore_id=restore_id)
     except Exception as e:
         print(f"Error executing workspace synchronization: {e}")
         return
 
     for record in summary.records:
         if record.status == "added":
-            print(f"  [+] Added:   [{record.exercise_id}] {record.exercise_name}")
+            print(f"  [+] Added:     [{record.exercise_id}] {record.exercise_name}")
+        elif record.status == "restored":
+            print(f"  [*] Restored:  [{record.exercise_id}] {record.exercise_name}")
         elif record.status == "failed":
             print(
-                f"  [x] Failed:  [{record.exercise_id}] {record.exercise_name} ({record.reason})"
+                f"  [x] Failed:    [{record.exercise_id}] {record.exercise_name} ({record.reason})"
             )
 
     print("\nSynchronization complete:")
-    print(f"  Added:   {summary.added_count}")
-    print(f"  Skipped: {summary.skipped_count}")
+    if restore_id is not None:
+        print(f"  Restored: {summary.restored_count}")
+    else:
+        print(f"  Added:   {summary.added_count}")
+        print(f"  Skipped: {summary.skipped_count}")
     print(f"  Failed:  {summary.failed_count}")
 
 

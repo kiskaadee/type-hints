@@ -30,9 +30,13 @@ def create_parser() -> argparse.ArgumentParser:
     )
 
     # sync subcommand
-    subparsers.add_parser(
+    sync_parser = subparsers.add_parser(
         "sync",
         help="Synchronize the workspace directory with the latest course content catalog without overwriting existing solutions.",
+    )
+    sync_parser.add_argument(
+        "--restore",
+        help="Restore a specific exercise by its 4-digit ID, overwriting any local changes (e.g. 0102).",
     )
 
     # check subcommand

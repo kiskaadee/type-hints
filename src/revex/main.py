@@ -39,6 +39,7 @@ class CLIArgs(argparse.Namespace):
         self.allow_hints: str | None = None
         self.allow_llm: str | None = None
         self.allow_glow: str | None = None
+        self.restore: str | None = None
 
 
 def main() -> None:
@@ -51,7 +52,7 @@ def main() -> None:
     elif args.command == "status":
         execute_status()
     elif args.command == "sync":
-        execute_sync()
+        execute_sync(args.restore)
     elif args.command == "check":
         execute_check(args.target)
     elif args.command == "set":

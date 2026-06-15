@@ -33,6 +33,9 @@ sequenceDiagram
 
 This command keeps the user's workspace aligned with the central content catalog. It strictly respects the workspace model guarantees, ensuring existing user solutions are never overwritten.
 
+### The `--restore` Option
+If a learner runs `revex sync --restore <exercise_id>`, the CLI bypasses the existence checks and forces an overwrite of the specified exercise files in the workspace (resetting the solution `.py` file and the description `README.md` to their clean, original templates). This allows learners to easily recover if they break their files or make unauthorized modifications to locked-down helper code.
+
 ### Sync Selection and File Mapping Logic
 
 ```mermaid
