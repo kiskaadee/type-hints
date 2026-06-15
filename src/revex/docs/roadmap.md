@@ -103,6 +103,7 @@ These are exploratory and not currently planned.
 
 - SQLite progress storage
 - LLM-generated interactive hints (personalized tutoring fallback when validation fails)
+- Clipboard copy helper (auto-copy exercise workspace path to user's clipboard upon viewing)
 - Plugin system
 - Remote content distribution
 - Community exercise packs

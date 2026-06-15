@@ -291,11 +291,16 @@ def execute_view(target: str) -> None:
 
 def _print_navigation_tip(exercise: ManifestExercise) -> None:
     """Helper to display the location of the exercise in the workspace."""
+    import os
+    from revex.core.services.paths import WORKSPACE_DIR
+    
     exercise_name = get_exercise_name(exercise)
-    relative_dest_dir = (
-        Path("workspace") / exercise.group / f"{exercise.id}-{exercise_name}"
-    )
+    abs_dest_dir = WORKSPACE_DIR / exercise.group / f"{exercise.id}-{exercise_name}"
+    
+    # Calculate path relative to the current working directory
+    relative_to_cwd = os.path.relpath(abs_dest_dir, Path.cwd())
+    
     print("\n📍 Exercise workspace:")
-    print(f"  {relative_dest_dir}")
+    print(f"  {relative_to_cwd}")
     print("\n👉 To jump to this exercise, run:")
-    print(f"  cd {relative_dest_dir}")
+    print(f"  cd {relative_to_cwd}")

@@ -73,7 +73,7 @@ def test_view_command(capsys):
     captured = capsys.readouterr()
     assert "0101" in captured.out
     assert "Exercise workspace:" in captured.out
-    assert "cd workspace/primitives/0101-basic_type_hints" in captured.out
+    assert "workspace/primitives/0101-basic_type_hints" in captured.out
 
 def test_check_and_status_flow(capsys):
     run_cli_main(["init"])
