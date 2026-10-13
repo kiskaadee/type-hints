@@ -6,5 +6,6 @@ x 2026-10-13 (A) Register Exercise 0501 in content/manifest.json and update dyna
 (B) Create Exercise 0601 (Protocols & Runtime Checkable) in content/exercises/protocols.runtime_checkable/ +curriculum @protocols
 (B) Create Exercise 0404 (ParamSpec & Decorator Typing) in content/exercises/functions.paramspec_decorator/ +curriculum @functions
 (C) Implement lazy auto-init and sync on first command run in revex/cli +cli @ux
-(C) Fix legacy pyright comparison warnings in primitives.request_metadata/solution.py +engine @lint
+x 2026-10-13 (C) Fix legacy pyright comparison warnings in primitives.request_metadata and main.py +engine @lint
 (D) Implement hot-reloading file watcher (revex watch) with inotify or watchdog +cli @ux
+
