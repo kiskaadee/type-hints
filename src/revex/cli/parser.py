@@ -9,6 +9,17 @@ import argparse
 
 def create_parser() -> argparse.ArgumentParser:
     """Creates and configures the ArgumentParser for the CLI."""
+    parser, _ = _build_parsers()
+    return parser
+
+
+def get_subparser(name: str) -> argparse.ArgumentParser | None:
+    """Returns the ArgumentParser instance for a specific subcommand, if defined."""
+    _, subparser_map = _build_parsers()
+    return subparser_map.get(name)
+
+
+def _build_parsers() -> tuple[argparse.ArgumentParser, dict[str, argparse.ArgumentParser]]:
     parser = argparse.ArgumentParser(
         prog="revex",
         description="CLI tool for learning Python type hints through guided exercises.",
@@ -18,13 +29,13 @@ def create_parser() -> argparse.ArgumentParser:
     )
 
     # init subcommand
-    subparsers.add_parser(
+    init_parser = subparsers.add_parser(
         "init",
         help="Initialize the local learner workspace, creating config files, progress database, and directories.",
     )
 
     # status subcommand
-    subparsers.add_parser(
+    status_parser = subparsers.add_parser(
         "status",
         help="Show current progress status, completion rates, and attempts breakdown by module.",
     )
@@ -97,4 +108,14 @@ def create_parser() -> argparse.ArgumentParser:
         help="Subcommand name to show help for (e.g., init, status, sync, check, set, view).",
     )
 
-    return parser
+    subparser_map: dict[str, argparse.ArgumentParser] = {
+        "init": init_parser,
+        "status": status_parser,
+        "sync": sync_parser,
+        "check": check_parser,
+        "set": set_parser,
+        "view": view_parser,
+        "help": help_parser,
+    }
+
+    return parser, subparser_map

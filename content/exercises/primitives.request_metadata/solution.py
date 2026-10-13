@@ -4,9 +4,16 @@ user_agent: str | None = None
 auth_token: str | None = None
 content_length: int | None = None
 
+
+def fetch_header(name: str) -> str | None:
+    headers = {"User-Agent": "Mozilla/5.0"}
+    return headers.get(name)
+
+
 # Simulate receiving a partial request
-user_agent = "Mozilla/5.0"
-content_length = 256
+user_agent = fetch_header("User-Agent")
+auth_token = fetch_header("Authorization")
+content_length = 256 if user_agent else None
 
 # Verify headers before execution
 if user_agent is not None:

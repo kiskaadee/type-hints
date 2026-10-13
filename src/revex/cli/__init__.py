@@ -6,10 +6,11 @@ from .commands import (
     execute_sync,
     execute_view,
 )
-from .parser import create_parser
+from .parser import create_parser, get_subparser
 
 __all__ = [
     "create_parser",
+    "get_subparser",
     "execute_init",
     "execute_status",
     "execute_sync",
