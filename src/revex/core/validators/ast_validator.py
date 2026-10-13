@@ -92,6 +92,7 @@ def assert_function_signature(
     expected_params: dict[str, str],
     expected_returns: str | None,
     error_code: str,
+    expected_type_params: list[str] | None = None,
 ) -> None:
     """
     Check an AST for a function signature and parameter type annotations.
@@ -102,6 +103,7 @@ def assert_function_signature(
         expected_params: A dictionary mapping parameter names to expected type strings.
         expected_returns: The expected return type annotation as a string (or None if unchecked).
         error_code: The domain-specific error code to raise on failure.
+        expected_type_params: The expected type parameters (e.g. ['T'] for def f[T]()).
 
     Raises:
         ASTValidationError: If the function is missing, lacks parameters, has mismatched annotations,
@@ -122,7 +124,20 @@ def assert_function_signature(
 
     node = func_nodes[0]
 
-    # 1. Verify return annotation
+    # 1. Verify type parameters (PEP 695)
+    if expected_type_params:
+        actual_type_params = [
+            ast.unparse(tp).strip() for tp in getattr(node, "type_params", [])
+        ]
+        if actual_type_params != expected_type_params:
+            raise ASTValidationError(
+                error_code=error_code,
+                variable_name=func_name,
+                line_number=node.lineno,
+                message=f"Expected function '{func_name}' to have type parameters {expected_type_params} but found {actual_type_params}.",
+            )
+
+    # 2. Verify return annotation
     if expected_returns is not None:
         if node.returns is None:
             raise ASTValidationError(
@@ -140,7 +155,7 @@ def assert_function_signature(
                 message=f"Expected function '{func_name}' to return '{expected_returns}' but found '{actual_returns}'.",
             )
 
-    # 2. Verify all expected parameters exist
+    # 3. Verify all expected parameters exist
     actual_param_names = {arg.arg for arg in node.args.args}
     for expected_name in expected_params:
         if expected_name not in actual_param_names:
@@ -151,7 +166,7 @@ def assert_function_signature(
                 message=f"Function '{func_name}' is missing the expected parameter '{expected_name}'.",
             )
 
-    # 3. Verify parameter annotations
+    # 4. Verify parameter annotations
     for arg in node.args.args:
         arg_name = arg.arg
         if arg_name in expected_params:
@@ -171,6 +186,51 @@ def assert_function_signature(
                     line_number=arg.lineno,
                     message=f"Expected parameter '{arg_name}' of function '{func_name}' to have type hint '{expected_type}' but found '{actual_type}'.",
                 )
+
+
+def assert_class_definition(
+    tree: ast.AST,
+    class_name: str,
+    expected_type_params: list[str],
+    error_code: str,
+) -> None:
+    """
+    Check an AST for a class definition and type parameters.
+
+    Args:
+        tree: The parsed Python Abstract Syntax Tree to inspect.
+        class_name: The name of the class to verify.
+        expected_type_params: A list of expected type parameter representations (e.g. ['T']).
+        error_code: The domain-specific error code to raise on failure.
+
+    Raises:
+        ASTValidationError: If the class is missing or has mismatched type parameters.
+    """
+    class_nodes: list[ast.ClassDef] = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ClassDef) and node.name == class_name:
+            class_nodes.append(node)
+
+    if not class_nodes:
+        raise ASTValidationError(
+            error_code=error_code,
+            variable_name=class_name,
+            line_number=None,
+            message=f"Class '{class_name}' is missing or not defined.",
+        )
+
+    node = class_nodes[0]
+    if expected_type_params:
+        actual_type_params = [
+            ast.unparse(tp).strip() for tp in getattr(node, "type_params", [])
+        ]
+        if actual_type_params != expected_type_params:
+            raise ASTValidationError(
+                error_code=error_code,
+                variable_name=class_name,
+                line_number=node.lineno,
+                message=f"Expected class '{class_name}' to have type parameters {expected_type_params} but found {actual_type_params}.",
+            )
 
 
 def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorRecord]:
@@ -238,7 +298,33 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
     # Check function signatures
     for func_name, rule in spec.functions.items():
         try:
-            assert_function_signature(tree, func_name, rule.params, rule.returns, rule.error_code)
+            assert_function_signature(
+                tree,
+                func_name,
+                rule.params,
+                rule.returns,
+                rule.error_code,
+                expected_type_params=rule.type_params,
+            )
+        except ASTValidationError as e:
+            errors.append(
+                ValidationErrorRecord(
+                    error_code=e.error_code,
+                    variable_name=e.variable_name,
+                    line_number=e.line_number,
+                    message=str(e),
+                )
+            )
+
+    # Check class definitions
+    for class_name, class_rule in spec.classes.items():
+        try:
+            assert_class_definition(
+                tree,
+                class_name,
+                class_rule.type_params,
+                class_rule.error_code,
+            )
         except ASTValidationError as e:
             errors.append(
                 ValidationErrorRecord(

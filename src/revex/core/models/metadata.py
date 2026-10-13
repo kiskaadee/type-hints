@@ -22,6 +22,14 @@ class FunctionRule(BaseModel):
 
     params: dict[str, str] = Field(default_factory=dict)
     returns: str | None = None
+    type_params: list[str] = Field(default_factory=list)
+    error_code: str
+
+
+class ClassRule(BaseModel):
+    """AST validation rule for verifying class definition and type parameters."""
+
+    type_params: list[str] = Field(default_factory=list)
     error_code: str
 
 
@@ -30,6 +38,7 @@ class ValidationSpec(BaseModel):
 
     annotations: dict[str, AnnotationRule] = Field(default_factory=dict)
     functions: dict[str, FunctionRule] = Field(default_factory=dict)
+    classes: dict[str, ClassRule] = Field(default_factory=dict)
 
 
 class ExerciseTranslation(BaseModel):
