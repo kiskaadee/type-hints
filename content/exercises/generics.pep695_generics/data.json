@@ -1,0 +1,66 @@
+{
+  "id": "0501",
+  "group": "generics",
+  "difficulty": "intermediate",
+  "tags": [
+    "generics",
+    "pep695",
+    "type-parameters",
+    "classes"
+  ],
+  "validation": {
+    "functions": {
+      "first_or_default": {
+        "params": {
+          "items": "Sequence[T]",
+          "default": "T"
+        },
+        "returns": "T",
+        "type_params": [
+          "T"
+        ],
+        "error_code": "GENERICS_PEP695_FUNC_001"
+      },
+      "format_id": {
+        "params": {
+          "val": "T"
+        },
+        "returns": "str",
+        "type_params": [
+          "T: (str, int)"
+        ],
+        "error_code": "GENERICS_PEP695_FUNC_002"
+      }
+    },
+    "classes": {
+      "Box": {
+        "type_params": [
+          "T"
+        ],
+        "error_code": "GENERICS_PEP695_CLASS_001"
+      }
+    }
+  },
+  "translations": {
+    "en": {
+      "title": "Modern Generics (PEP 695)",
+      "hints": {
+        "error_codes": {
+          "GENERICS_PEP695_FUNC_001": "Use PEP 695 syntax to declare type parameter 'T': def first_or_default[T](items: Sequence[T], default: T) -> T",
+          "GENERICS_PEP695_FUNC_002": "Constrain 'T' to either str or int using tuple constraint syntax: def format_id[T: (str, int)](val: T) -> str",
+          "GENERICS_PEP695_CLASS_001": "Declare the generic class using type parameter syntax: class Box[T]:"
+        }
+      }
+    },
+    "es": {
+      "title": "Genéricos Modernos (PEP 695)",
+      "hints": {
+        "error_codes": {
+          "GENERICS_PEP695_FUNC_001": "Utiliza la sintaxis de PEP 695 para declarar el parámetro de tipo 'T': def first_or_default[T](items: Sequence[T], default: T) -> T",
+          "GENERICS_PEP695_FUNC_002": "Restringe 'T' a str o int usando la sintaxis de tupla de restricción: def format_id[T: (str, int)](val: T) -> str",
+          "GENERICS_PEP695_CLASS_001": "Declara la clase genérica usando la sintaxis de parámetros de tipo: class Box[T]:"
+        }
+      }
+    }
+  }
+}

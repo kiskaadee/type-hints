@@ -31,13 +31,16 @@ def test_init_command(capsys):
     assert "Environment successfully initialized!" in captured.out
 
 def test_sync_command(capsys):
+    from revex.core.services.manifest import load_manifest
+
     run_cli_main(["init"])
     capsys.readouterr()  # clear buffer
-    
+
     run_cli_main(["sync"])
     captured = capsys.readouterr()
+    manifest = load_manifest()
     assert "Synchronizing workspace exercises..." in captured.out
-    assert "Added:   12" in captured.out
+    assert f"Added:   {len(manifest.exercises)}" in captured.out
 
 def test_set_command(capsys):
     run_cli_main(["init"])
@@ -161,11 +164,10 @@ def test_sync_restore_command(capsys):
     run_cli_main(["sync"])
     capsys.readouterr()
 
-    from revex.core.services.paths import WORKSPACE_DIR, PROJECT_ROOT
+    from revex.core.services.paths import WORKSPACE_DIR
     exercise_file = WORKSPACE_DIR / "primitives/0101-basic_type_hints/basic_type_hints.py"
 
     # Write a modification
-    original_content = exercise_file.read_text(encoding="utf-8")
     exercise_file.write_text("MODIFIED_BY_USER", encoding="utf-8")
 
     # Run restore sync

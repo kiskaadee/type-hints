@@ -1,0 +1,50 @@
+"""
+Exercise 0501: Modern Generics (PEP 695)
+
+Implement generic functions and a generic class using Python 3.12+
+PEP 695 syntax (square brackets for type parameters).
+"""
+
+from collections.abc import Sequence
+
+
+# TODO: 1. Make this function generic over [T] using PEP 695 syntax.
+# Accept `items: Sequence[T]` and `default: T`, returning `T`.
+def first_or_default(items, default):
+    if items:
+        return items[0]
+    return default
+
+
+# TODO: 2. Make this function generic over [T: (str, int)] using tuple constraint syntax.
+# Accept `val: T` and return `str`.
+def format_id(val):
+    return f"ID-{val}"
+
+
+# TODO: 3. Make Box a generic class over [T] using PEP 695 syntax.
+# Annotate __init__, get, and replace with proper type hints.
+class Box:
+    def __init__(self, value):
+        self._value = value
+
+    def get(self):
+        return self._value
+
+    def replace(self, new_value):
+        old = self._value
+        self._value = new_value
+        return old
+
+
+if __name__ == "__main__":
+    nums = [1, 2, 3]
+    first_num = first_or_default(nums, 0)
+    print(f"First num: {first_num}")
+
+    formatted = format_id(42)
+    print(f"Formatted: {formatted}")
+
+    box = Box("initial")
+    old_val = box.replace("updated")
+    print(f"Replaced: {old_val} -> {box.get()}")

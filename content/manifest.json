@@ -72,6 +72,12 @@
       "path": "content/exercises/collections.board_game_matrix",
       "group": "collections",
       "difficulty": "beginner"
+    },
+    {
+      "id": "0501",
+      "path": "content/exercises/generics.pep695_generics",
+      "group": "generics",
+      "difficulty": "intermediate"
     }
   ]
 }
