@@ -4,10 +4,10 @@ x 2026-10-13 (A) Register Exercise 0501 in content/manifest.json and update dyna
 x 2026-10-13 (C) Fix legacy pyright comparison warnings in primitives.request_metadata and main.py +engine @lint
 x 2026-10-15 (A) Implement FastAPI web server endpoints for catalog and column-precise validation in src/revex/server/ +server @api
 x 2026-10-15 (A) Write integration test suite for revex-server in tests/test_server.py +test @server
-(A) Scaffold React/Vite/Tailwind frontend client with retro-terminal chassis and Monaco editor in web/ +web @ui
+x 2026-10-15 (A) Scaffold React/Vite/Tailwind frontend client with retro-terminal chassis and Monaco editor in web/ +web @ui
 (A) Solve and verify Exercise 0501 (PEP 695 Generics) in workspace +curriculum @generics
 (A) Create Exercise 0502 (PEP 695 Classes & Type Bounds) in content/exercises/generics.pep695_classes/ +curriculum @generics
-(B) Connect frontend client to /api/v1/check and implement DOM terminal panel +web @ui
+x 2026-10-15 (B) Connect frontend client to /api/v1/check and implement DOM terminal panel +web @ui
 (B) Create Exercise 0601 (Protocols & Runtime Checkable) in content/exercises/protocols.runtime_checkable/ +curriculum @protocols
 (B) Create Exercise 0404 (ParamSpec & Decorator Typing) in content/exercises/functions.paramspec_decorator/ +curriculum @functions
 (B) Configure OIDC SSO authentication flow and callback handler +server @auth
