@@ -20,5 +20,5 @@ x 2026-10-15 (C) Document frontend API contract friction and backend deliverable
 (B) Create Exercise 0404 (ParamSpec & Decorator Typing) in content/exercises/functions.paramspec_decorator/ +curriculum @functions
 (B) Configure OIDC SSO authentication flow and callback handler +server @auth
 (C) Implement lazy auto-init and sync on first command run in revex/cli +cli @ux
-(C) Push feature branches (feat/anne/web-client, docs/web-architecture, feat/web-server) to Gitea forge +git @remote
+x 2026-10-15 (C) Push feature branches (feat/anne/web-client, docs/web-architecture, feat/web-server) to Gitea forge +git @remote
 (D) Implement hot-reloading file watcher (revex watch) with inotify or watchdog +cli @ux
