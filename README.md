@@ -22,6 +22,7 @@ canonical exercise sources.
 - Local-first workflow
 - Multi-language content support
 - Content synchronization without overwriting learner work
+- Zero-install Web Playground & REST API (`revex-server`)
 
 ---
 
@@ -210,15 +211,20 @@ introduce new exercises.
 
 ## Developer Documentation
 
-- [architecture.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/architecture.md)
-- [authoring_guide.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/authoring_guide.md)
-- [roadmap.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/roadmap.md)
-- [cli.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/cli.md)
-- [implementation.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation.md)
-- [implementation_plan.md](file:///home/kiskaadee/Projects/type-hints/src/revex/docs/implementation_plan.md)
+- [architecture.md](src/revex/docs/architecture.md)
+- [authoring_guide.md](src/revex/docs/authoring_guide.md)
+- [roadmap.md](src/revex/docs/roadmap.md)
+- [cli.md](src/revex/docs/cli.md)
+- [implementation.md](src/revex/docs/implementation.md)
+- [implementation_plan.md](src/revex/docs/implementation_plan.md)
+- [web-architecture-rfc.md](docs/web-architecture-rfc.md)
 
 ---
 
 ## Project Status
 
 Core features are fully functional. Milestones 1 through 5 are complete, including workspace initialization (`revex init`), catalog synchronization (`revex sync`), terminal markdown rendering (with optional `glow` support), static AST and Pyright validation (`revex check`), settings management (`revex set`), and progress statistics reporting (`revex status`).
+
+### Web Playground & Server (Active Development)
+
+The platform is expanding to include an interactive, zero-install Web Playground and a FastAPI backend service (`revex-server`). It provides a distraction-free, terminal-aesthetic web workspace with live AST structural verification, Pyright static analysis diagnostics, and OIDC identity management. See [Web Architecture RFC](docs/web-architecture-rfc.md) for full design specifications and visual tokens.
