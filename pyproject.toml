@@ -5,7 +5,9 @@ description = "An interactive CLI for learning Python type hints with automated 
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.115.0",
     "pydantic>=2.0.0",
+    "uvicorn>=0.30.0",
 ]
 
 
@@ -22,6 +24,7 @@ packages = ["src/revex"]
 
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
     "pyright>=1.1.410",
     "pytest>=9.0.3",
     "ruff>=0.15.16",
