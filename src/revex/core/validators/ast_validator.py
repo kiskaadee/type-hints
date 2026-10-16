@@ -268,6 +268,7 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
             ValidationErrorRecord(
                 error_code="SYNTAX_ERROR",
                 line_number=e.lineno,
+                column_number=e.offset,
                 message=f"Syntax Error: {e.msg}",
             )
         )
@@ -291,6 +292,9 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
                     error_code=e.error_code,
                     variable_name=e.variable_name,
                     line_number=e.line_number,
+                    column_number=e.column_number,
+                    end_line_number=e.end_line_number,
+                    end_column_number=e.end_column_number,
                     message=str(e),
                 )
             )
@@ -312,6 +316,9 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
                     error_code=e.error_code,
                     variable_name=e.variable_name,
                     line_number=e.line_number,
+                    column_number=e.column_number,
+                    end_line_number=e.end_line_number,
+                    end_column_number=e.end_column_number,
                     message=str(e),
                 )
             )
@@ -331,6 +338,9 @@ def validate_ast(file_path: Path, spec: ValidationSpec) -> list[ValidationErrorR
                     error_code=e.error_code,
                     variable_name=e.variable_name,
                     line_number=e.line_number,
+                    column_number=e.column_number,
+                    end_line_number=e.end_line_number,
+                    end_column_number=e.end_column_number,
                     message=str(e),
                 )
             )

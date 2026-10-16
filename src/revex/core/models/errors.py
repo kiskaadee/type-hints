@@ -18,6 +18,10 @@ class ValidationErrorRecord(BaseModel):
     error_code: str
     variable_name: str | None = Field(default=None)
     line_number: int | None = Field(default=None)
+    column_number: int | None = Field(default=None)
+    end_line_number: int | None = Field(default=None)
+    end_column_number: int | None = Field(default=None)
+    severity: str = Field(default="error")
     message: str | None = Field(default=None)  # The localized hint/explanation
 
 
@@ -33,6 +37,9 @@ class ASTValidationError(Exception):
     error_code: str
     variable_name: str
     line_number: int | None
+    column_number: int | None
+    end_line_number: int | None
+    end_column_number: int | None
 
     def __init__(
         self,
@@ -40,10 +47,16 @@ class ASTValidationError(Exception):
         variable_name: str,
         line_number: int | None,
         message: str,
+        column_number: int | None = None,
+        end_line_number: int | None = None,
+        end_column_number: int | None = None,
     ) -> None:
         self.error_code = error_code
         self.variable_name = variable_name
         self.line_number = line_number
+        self.column_number = column_number
+        self.end_line_number = end_line_number
+        self.end_column_number = end_column_number
         super().__init__(message)
 
 

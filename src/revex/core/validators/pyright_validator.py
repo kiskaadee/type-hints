@@ -105,12 +105,20 @@ def validate_pyright(file_path: Path) -> list[ValidationErrorRecord]:
 
                 range_info = diag.get("range", {})
                 start_info = range_info.get("start", {})
+                end_info = range_info.get("end", {})
                 line_no = start_info.get("line", 0) + 1  # Convert to 1-indexed
+                col_no = start_info.get("character", 0) + 1
+                end_line_no = end_info.get("line", 0) + 1
+                end_col_no = end_info.get("character", 0) + 1
 
                 errors.append(
                     ValidationErrorRecord(
                         error_code=f"PYRIGHT_{rule.upper()}",
                         line_number=line_no,
+                        column_number=col_no,
+                        end_line_number=end_line_no,
+                        end_column_number=end_col_no,
+                        severity=severity or "error",
                         message=message,
                     )
                 )
