@@ -64,6 +64,7 @@ def validate_pyright(file_path: Path) -> list[ValidationErrorRecord]:
 
     try:
         from revex.core.services.paths import CACHE_DIR, PROJECT_ROOT
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
         config_path = CACHE_DIR / "pyrightconfig.json"
         
         # Dynamically generate configuration to avoid workspace exclusions
@@ -130,10 +131,12 @@ def validate_pyright(file_path: Path) -> list[ValidationErrorRecord]:
             )
         )
     except Exception as e:
+        from revex.core.services.paths import PROJECT_ROOT
+        clean_err = str(e).replace(str(PROJECT_ROOT), "<revex>")
         errors.append(
             ValidationErrorRecord(
                 error_code="PYRIGHT_EXECUTION_ERROR",
-                message=f"Failed to run Pyright type checker: {e}",
+                message=f"Failed to run Pyright type checker: {clean_err}",
             )
         )
 

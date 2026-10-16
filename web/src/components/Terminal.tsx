@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useImperativeHandle, forwardRef } from 'react'
-import { Terminal as TermIcon, Trash2, CheckCircle2, XCircle, Clock } from 'lucide-react'
+import { Terminal as TermIcon, Trash2, CheckCircle2, XCircle, Clock, Tv } from 'lucide-react'
 import { RenderAnsi } from '../services/ansi'
 import type { UIState } from '../types/api'
 
@@ -29,8 +29,21 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
     const [commandInput, setCommandInput] = useState('')
     const [history, setHistory] = useState<string[]>([])
     const [historyIdx, setHistoryIdx] = useState<number>(-1)
+    const [scanlinesEnabled, setScanlinesEnabled] = useState(false)
+    const [copiedNotice, setCopiedNotice] = useState<string | null>(null)
     const terminalEndRef = useRef<HTMLDivElement>(null)
     const inputRef = useRef<HTMLInputElement>(null)
+
+    // Tmux-like copy on text selection
+    const handleMouseUp = () => {
+      const selection = window.getSelection()?.toString().trim()
+      if (selection && selection.length > 0) {
+        navigator.clipboard.writeText(selection).then(() => {
+          setCopiedNotice(`COPIED (${selection.length})`)
+          setTimeout(() => setCopiedNotice(null), 1500)
+        }).catch(() => {})
+      }
+    }
 
     // Auto-scroll when logs change
     useEffect(() => {
@@ -200,6 +213,25 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
               </div>
             )}
 
+            {copiedNotice && (
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#10b981]/20 text-[#10b981] border border-[#10b981]/40 animate-pulse">
+                {copiedNotice}
+              </span>
+            )}
+
+            <button
+              onClick={() => setScanlinesEnabled((prev) => !prev)}
+              className={`p-1 rounded transition ${
+                scanlinesEnabled
+                  ? 'text-[#ffb000] bg-[#ffb000]/10 hover:bg-[#ffb000]/20'
+                  : 'text-[#8b949e] hover:text-white hover:bg-white/5'
+              }`}
+              title={scanlinesEnabled ? 'CRT Scanlines: ON (Click to disable)' : 'CRT Scanlines: OFF (Click to enable)'}
+              aria-label="Toggle CRT Scanlines"
+            >
+              <Tv className="w-3.5 h-3.5" />
+            </button>
+
             <button
               onClick={onClear}
               className="p-1 rounded text-[#8b949e] hover:text-white hover:bg-white/5 transition"
@@ -211,9 +243,12 @@ export const Terminal = forwardRef<TerminalHandle, TerminalProps>(
           </div>
         </div>
 
-        {/* CRT Sunken Log Window with Scanlines */}
+        {/* CRT Sunken Log Window with Optional Scanlines */}
         <div
-          className="flex-1 p-3.5 overflow-y-auto crt-sunken crt-scanlines text-xs leading-relaxed space-y-2 relative"
+          className={`flex-1 p-3.5 overflow-y-auto crt-sunken text-xs leading-relaxed space-y-2 relative ${
+            scanlinesEnabled ? 'crt-scanlines' : ''
+          }`}
+          onMouseUp={handleMouseUp}
           onClick={() => inputRef.current?.focus()}
         >
           {logs.map((log, index) => (
