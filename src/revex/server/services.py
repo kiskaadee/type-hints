@@ -201,10 +201,12 @@ def check_solution(exercise_id: str, code: str, lang: str = "en") -> CheckRespon
             f"\u001b[31m[FAIL]\u001b[0m Validation failed with {len(raw_errors)} error(s):"
         )
         for err in raw_errors:
+            msg = err.message or "Validation check failed."
+            msg = msg.replace(str(tmp_path), "solution.py").replace(str(PROJECT_ROOT), "<revex>")
             pos_str = f"Line {err.line_number}" if err.line_number else ""
             if err.column_number:
                 pos_str += f":{err.column_number}"
-            output_lines.append(f"  \u001b[31m✗\u001b[0m {pos_str} - {err.message} \u001b[90m[{err.error_code}]\u001b[0m")
+            output_lines.append(f"  \u001b[31m✗\u001b[0m {pos_str} - {msg} \u001b[90m[{err.error_code}]\u001b[0m")
 
             error_items.append(
                 CheckErrorItem(
@@ -212,7 +214,7 @@ def check_solution(exercise_id: str, code: str, lang: str = "en") -> CheckRespon
                     start_column=err.column_number,
                     end_line=err.end_line_number or err.line_number,
                     end_column=err.end_column_number or (err.column_number + 1 if err.column_number else None),
-                    message=err.message or "Validation check failed.",
+                    message=msg,
                     error_code=err.error_code,
                     severity="error",
                 )

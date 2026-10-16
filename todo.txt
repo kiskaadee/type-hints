@@ -4,12 +4,21 @@ x 2026-10-13 (A) Register Exercise 0501 in content/manifest.json and update dyna
 x 2026-10-13 (C) Fix legacy pyright comparison warnings in primitives.request_metadata and main.py +engine @lint
 x 2026-10-15 (A) Implement FastAPI web server endpoints for catalog and column-precise validation in src/revex/server/ +server @api
 x 2026-10-15 (A) Write integration test suite for revex-server in tests/test_server.py +test @server
-(A) Scaffold React/Vite/Tailwind frontend client with retro-terminal chassis and Monaco editor in web/ +web @ui
+x 2026-10-15 (A) Preserve web architecture RFC in docs/web-architecture-rfc.md and update README.md +docs @architecture
+x 2026-10-15 (A) Scaffold React/Vite/Tailwind frontend client with retro-terminal chassis and Monaco editor in web/ +web @ui
+x 2026-10-15 (B) Connect frontend client to /api/v1/check and implement DOM terminal panel in web/src/components/Terminal.tsx +web @ui
+x 2026-10-15 (B) Implement mobile quick-insert macro bar and responsive tab layouts in web/src/components/MobileMacroBar.tsx +web @ui
+x 2026-10-15 (B) Implement 5-state lifecycle and localStorage code draft caching in web/src/App.tsx +web @ui
+x 2026-10-15 (C) Document frontend API contract friction and backend deliverables in web/docs/backend-friction-and-pending.md +docs @web
+(A) Add stage discriminator (ast vs pyright) to CheckErrorItem in src/revex/server/schemas.py and services.py +server @api
 (A) Solve and verify Exercise 0501 (PEP 695 Generics) in workspace +curriculum @generics
 (A) Create Exercise 0502 (PEP 695 Classes & Type Bounds) in content/exercises/generics.pep695_classes/ +curriculum @generics
-(B) Connect frontend client to /api/v1/check and implement DOM terminal panel +web @ui
+(B) Implement student progress and code draft persistence in revex-server (SQLite WAL) +server @db
+(B) Add static exercise assets delivery endpoint to revex-server +server @api
+(B) Add rate limiting and subprocess timeout protections to revex-server check endpoint +server @perf
 (B) Create Exercise 0601 (Protocols & Runtime Checkable) in content/exercises/protocols.runtime_checkable/ +curriculum @protocols
 (B) Create Exercise 0404 (ParamSpec & Decorator Typing) in content/exercises/functions.paramspec_decorator/ +curriculum @functions
 (B) Configure OIDC SSO authentication flow and callback handler +server @auth
 (C) Implement lazy auto-init and sync on first command run in revex/cli +cli @ux
+x 2026-10-15 (C) Push feature branches (feat/anne/web-client, docs/web-architecture, feat/web-server) to Gitea forge +git @remote
 (D) Implement hot-reloading file watcher (revex watch) with inotify or watchdog +cli @ux
